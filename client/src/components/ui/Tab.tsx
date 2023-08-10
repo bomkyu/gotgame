@@ -3,6 +3,7 @@ import style from './tab.module.css'
 const Tab = () => {
   return (
     <ul className={`${style['tab-list']}`}>
+      <li><b>전체</b></li>
       <li><b>RPG</b></li>
       <li><b>FPS</b></li>
       <li><b>TPS</b></li>

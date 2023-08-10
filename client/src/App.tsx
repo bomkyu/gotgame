@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
+import Modal from './components/layout/Modal';
 const App = () => {
   return (
     <>
@@ -14,6 +15,7 @@ const App = () => {
           <Route path='/*' element={<NotFound/>} />
         </Routes>
       </div>
+      <Modal/>
       <Footer/>
     </>
   );

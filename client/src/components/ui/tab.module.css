@@ -1,6 +1,6 @@
 .tab-list { display: flex; justify-content: space-between; margin-top: 20px; }
 .tab-list > li { width: 100%; text-align: center; }
-.tab-list > li > b { position: relative; line-height: 60px; text-align: center; font-size: 20px; font-weight: bold; color:#333; transition: 0.3s; cursor: pointer; }
+.tab-list > li > b { position: relative; line-height: 60px; text-align: center; font-size: 24px; font-weight: bold; color:#333; transition: 0.3s; cursor: pointer; }
 .tab-list > li > b:hover {color: #4E4FEB;}
 .tab-list > li > b:after { position: absolute; width: 0%; height: 2px; bottom: -4px; left: 50%; background-color: #4E4FEB; transform: translateX(-50%); transition: width .25s ease-in-out; content: "";}
 .tab-list > li > b:hover:after { width: 100%; }

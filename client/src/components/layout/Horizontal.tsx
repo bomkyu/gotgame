@@ -1,13 +1,9 @@
 import React, { ReactNode } from 'react'
-
-export const horizontal_3 = ({children} : {children : ReactNode}) => {
+import style from './horizontal.module.css'
+export const Horizontal_4 = ({children} : {children : ReactNode}) => {
     return(
-        <div>{children}</div>
-    )
-}
-
-export const horizontal_4 = ({children} : {children : ReactNode}) => {
-    return(
-        <div>{children}</div>
+        <ul className={`${style.horizontal_4}`}>
+            {children}
+        </ul>
     )
 }

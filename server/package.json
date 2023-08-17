@@ -17,7 +17,7 @@
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "start": "yarn ts-node src/server.ts",
+    "start": "nodemon --exec yarn ts-node src/server.ts",
     "dev": "yarn nodemon src/server.ts",
     "build": "tsc"
   }

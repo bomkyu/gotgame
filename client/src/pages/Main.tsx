@@ -20,11 +20,7 @@ const Main = () => {
         <Tab/>
         <InputSearch/>
         <Horizontal_4>
-          <Card onClick={openModal}/>
-          <Card onClick={openModal}/>
-          <Card onClick={openModal}/>
-          <Card onClick={openModal}/>
-          <Card onClick={openModal}/>
+          <Card onClick={()=>openModal('list')}/>
         </Horizontal_4>
       </Inner>
       

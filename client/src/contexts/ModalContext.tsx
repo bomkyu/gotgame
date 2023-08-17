@@ -1,20 +1,25 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import {ModalContextType} from '../interface'
+import { ModalContextType } from '../interface'
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children } : { children : ReactNode}) => {
   const [modalStatus, setModalStatus] = useState(false);
+  const [modalType, setModalType] = useState('');
 
-  const openModal = () => {
+  const openModal = (type : string) => {
     setModalStatus(true);
+    setModalType(type)
   };
 
   const closeModal = () => {
     setModalStatus(false);
+    setModalType('')
   };
 
+  
+
   return (
-    <ModalContext.Provider value={{ modalStatus, openModal, closeModal }}>
+    <ModalContext.Provider value={{ modalStatus, modalType, openModal, closeModal }}>
       {children}
     </ModalContext.Provider>
   );

@@ -1,12 +1,13 @@
 import React from 'react'
-
-const header = () => {
+import { useModal } from '../../contexts/ModalContext'
+const Header = () => {
+  const { modalStatus, openModal, closeModal } = useModal();
   return (
     <header>
       <div className='inner'>
           <p className='logo'>GOATGAM</p>
           <div className='header-util'>
-            <p>로그인</p>
+            <p onClick={()=>openModal('login')}>로그인</p>
             <p>글쓰기</p>
           </div>
       </div>
@@ -14,4 +15,4 @@ const header = () => {
   )
 }
 
-export default header
+export default Header

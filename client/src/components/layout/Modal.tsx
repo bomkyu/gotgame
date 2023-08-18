@@ -14,9 +14,9 @@ const Modal = () => {
   //로그인 정보가 callback되는 함수
   const loginCallBack = ( obj : object ) => {
     setUserInfo(obj)
-    openModal('register')
+    data(obj);
   }
-
+  
   //닉네임 Input 함수
   const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -24,7 +24,7 @@ const Modal = () => {
 
   //회원가입 화면일때 실행되는 함수.
   const registerOnClick=()=>{
-    data();
+    data({...userInfo, nickName : inputValue});
   }
 
   //사용자가 closeModal 선택 했을 시 State 클리어 함수
@@ -34,13 +34,18 @@ const Modal = () => {
     closeModal();
   }
 
-  const data = () =>{
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/register`,
-    {
-      ...userInfo,
-       nickName : inputValue
-    }).then(response => {
-      alert(response.data.error)
+  const data = (obj : object) =>{
+    //return
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/register`,{...obj, nickName : inputValue})
+    .then(response => {
+      const {status} = response.data
+      console.log(status);
+      if( status === 'register'){
+        openModal('register')
+      }else if (status === 'registerSuccess' || status === 'login'){
+        sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
+        cleanUp()
+      }
     })
   }
 

@@ -5,6 +5,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export const ModalProvider = ({ children } : { children : ReactNode}) => {
   const [modalStatus, setModalStatus] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [modalData, setModalData] = useState({});
 
   const openModal = (type : string) => {
     setModalStatus(true);
@@ -19,7 +20,7 @@ export const ModalProvider = ({ children } : { children : ReactNode}) => {
   
 
   return (
-    <ModalContext.Provider value={{ modalStatus, modalType, openModal, closeModal }}>
+    <ModalContext.Provider value={{ modalStatus, modalType, openModal, closeModal, setModalData, modalData }}>
       {children}
     </ModalContext.Provider>
   );

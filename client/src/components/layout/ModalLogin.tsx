@@ -1,17 +1,18 @@
-import React from 'react'
-import {googleLoginRequest, kakaoLoginRequest} from '../../api/firebase'
+import React,{useEffect} from 'react'
+import {googleTokenRequest, kakaoTokenRequest} from '../../api/oauth'
 import { ModalLoginProps } from '../../interface'
+import axios from 'axios'
 
-const ModalLogin = ({loginCallBack} : ModalLoginProps) => {
+const ModalLogin = () => {
 
     const loginHandler = async (type : string) => {
         switch (type) {
             case 'google':
-            await googleLoginRequest(loginCallBack);
+            await googleTokenRequest();
             break;
             
             case 'kakao':
-            await kakaoLoginRequest(loginCallBack);
+            await kakaoTokenRequest();
             break;
             default:
             alert('에러!')

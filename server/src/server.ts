@@ -23,6 +23,11 @@ const connection = mysql.createConnection({
 app.use(bodyParser.json());
 app.use(cors());
 
+//카카오 토큰
+app.post('/api/token', (req : Request, res: Response) =>{
+  console.log(req.body)
+})
+
 // 라우터 등록
 app.get('/api/data', (req: Request, res: Response) => {
   const query = 'SELECT * FROM tb_user'; // 적절한 테이블 이름으로 변경해주세요.
@@ -37,10 +42,9 @@ app.get('/api/data', (req: Request, res: Response) => {
   });
 });
 
-// register 라우터 등록
+// 인증정보 유효성 검사 
 app.post('/api/register', async (req: Request, res: Response) => {
-  console.log('asdasdasdasdasd',req.body);
-  const query : string = `SELECT uid FROM tb_user WHERE uid = '${req.body.uid}'`
+  const query : string = `SELECT id, nickName, platform FROM tb_user WHERE id = '${req.body.id}'`
   connection.query(query, (err, results : mysql.OkPacket[]) => {
     if (err) {
       console.error('쿼리부분 에러', err);
@@ -48,24 +52,21 @@ app.post('/api/register', async (req: Request, res: Response) => {
     } else {
       console.log(results.length);
       if(results.length > 0){
-        res.json({ status: 'login' }); // 클라이언트에게 에러 응답 보내기
-        console.log('사용자가 있소용');
+        res.json({ status: 'login', userInfo : results[0] }); // 클라이언트에게 에러 응답 보내기
       }else{
-        const {email, name, nickName, uid} = req.body
-        console.log(nickName);
-        if(nickName === ''){
+        const {id, nickName, platform} = req.body
+        if(nickName === undefined){
           res.json({status : 'register'})
-          console.log('닉네임이 없소용');
+          return
         }else{
-          console.log('이제 회원가입이에여',req.body)
-          const insertQuery = `INSERT INTO tb_user (email, name, nickName, uid) VALUES ('${email}','${name}','${nickName}','${uid}')`
+          const insertQuery = `INSERT INTO tb_user (id, nickName, platform) VALUES ('${id}','${nickName}', '${platform}')`
           connection.query(insertQuery, (err, insertResults) => {
             if (err) {
-              console.error('회원가입 쿼리 실행 중 에러', err);
+              //console.error('회원가입 쿼리 실행 중 에러', err);
               res.status(500).json({ error: 'An error occurred while registering user.' });
             } else {
               //console.log('회원가입 성공', insertResults);
-              res.json({ status: 'registerSuccess' });
+              res.json({ status: 'registerSuccess'});
             }
           });
         }

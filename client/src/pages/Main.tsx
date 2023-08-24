@@ -1,12 +1,49 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Card from '../components/ui/Card'
 import Inner from '../components/layout/Inner'
 import Tab from '../components/ui/Tab'
 import InputSearch from '../components/ui/InputSearch'
 import { Horizontal_4 } from '../components/layout/Horizontal'
 import { useModal } from '../contexts/ModalContext'
+import { LoginInfoRequest } from '../api/oauth'
+import { setUserInfo } from '../session'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 const Main = () => {
-  const { modalStatus, openModal, closeModal } = useModal();
+  const { openModal, setModalData } = useModal();
+  const navigate = useNavigate();
+  //url에 토큰정보 있는지 확인
+  const tokenRequest = async () => {
+    LoginInfoRequest(LoginInfoRequestCallBack);
+  }
+
+  //콜백이 되는 함수
+  const LoginInfoRequestCallBack = (data : object) => {
+    //회원정보 검색
+    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/register`,data)
+    .then((respone)=>{
+      switch (respone.data.status) {
+        case 'register':
+            openModal('register');
+            setModalData(data)
+          break;
+        case 'login' :
+          setUserInfo(respone.data.userInfo);
+          navigate('/');
+          break;
+      
+        default:
+          break;
+      }
+      console.log(respone)
+    })
+    
+  }
+  useEffect( () => {
+    tokenRequest();
+  }, [])
+
   return (
     <>
       <div className='visual-wrap'>

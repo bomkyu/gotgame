@@ -11,6 +11,9 @@ export interface UserData {
 export interface ModalContextType {
     modalStatus: boolean;
     modalType : string;
+    modalData : object;
+
+    setModalData : (data : object) => void;
     openModal: (modalType : string) => void;
     closeModal: () => void;
 }
@@ -28,6 +31,7 @@ export interface InputProps {
 
 export interface ModalLoginProps {
     loginCallBack : (obj : object) => void
+    loginCallBackRest : (obj : object) => void
 }
 
 export interface ModalRegisterProps {

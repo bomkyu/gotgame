@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound';
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Modal from './components/layout/Modal';
+import Write from './pages/Write';
 const App = () => {
   return (
     <>
@@ -12,6 +13,7 @@ const App = () => {
       <div className='content-wrap'>
         <Routes>
           <Route path='/' element={<Main/>} />
+          <Route path='/write' element={<Write/>} />
           <Route path='/*' element={<NotFound/>} />
         </Routes>
       </div>

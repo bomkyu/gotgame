@@ -1,15 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../contexts/ModalContext'
+import {logOut} from '../../session'
 const Header = () => {
   const { openModal } = useModal();
   const navigate = useNavigate();
   const user = sessionStorage.getItem('userInfo');
-
-  const logout = () => {
-    sessionStorage.removeItem('userInfo');
-    navigate('/');
-  }
   return (
     <header>
       <div className='inner'>
@@ -19,8 +15,12 @@ const Header = () => {
               !user ? <p onClick={()=>openModal('login')}>로그인</p>
               :
               <>
-              <p onClick={()=>logout()}>로그아웃</p>
-              <p>글쓰기</p>
+              <p onClick={()=>{
+                logOut();
+                navigate('/');
+                }
+                }>로그아웃</p>
+              <p onClick={()=>navigate('/write')}>글쓰기</p>
               </>
               }
               

@@ -8,3 +8,7 @@ export const getUserInfo = () => {
     const changeJson :string = JSON.parse(getSession!);
     return changeJson;
 }
+
+export const logOut = () => {
+    sessionStorage.removeItem('userInfo');
+}

@@ -75,6 +75,11 @@ app.post('/api/register', async (req: Request, res: Response) => {
   });
 });
 
+app.post('/write', async (req: Request, res: Response) => {
+  const information = req.body;
+  console.log(information);
+});
+
 // 서버 시작
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

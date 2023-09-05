@@ -24,6 +24,7 @@ export interface CardProps {
 }
 
 export interface InputProps {
+    name : string
     title : string,
     value : string,
     onChange : (e : React.ChangeEvent<HTMLInputElement>)=> void;

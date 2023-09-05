@@ -1,2 +1,5 @@
 .horizontal_4 { display: flex; width: 100%; margin-top: 40px; flex-wrap: wrap; gap: 17px; }
 .horizontal_4 > * { width: calc(25% - 13px); cursor: pointer; }
+
+.horizontal_2 { display: flex; width: 100%; flex-wrap: wrap; gap: 17px; }
+.horizontal_2 > * { width: calc(50% - 13px); cursor: pointer; } 

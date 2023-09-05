@@ -6,7 +6,7 @@ const ModalRegister = ({ onChange, registerOnClick, inputValue} : ModalRegisterP
     return(
       <>
         <h2>사용하실 닉네임을 지정해주세요!</h2>
-        {<Input title="닉네임" value={inputValue} onChange={onChange}/>}
+        {<Input name="nickName" title="닉네임" value={inputValue} onChange={onChange}/>}
         <button onClick={registerOnClick}>등록이요~</button>
       </>
     )

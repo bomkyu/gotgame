@@ -5,7 +5,7 @@ export const setUserInfo = (userInfo : object) => {
 
 export const getUserInfo = () => {
     const getSession = sessionStorage.getItem('userInfo');
-    const changeJson :string = JSON.parse(getSession!);
+    const changeJson = JSON.parse(getSession!);
     return changeJson;
 }
 

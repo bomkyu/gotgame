@@ -30,8 +30,7 @@ app.post('/api/token', (req : Request, res: Response) =>{
 
 // 라우터 등록
 app.get('/api/data', (req: Request, res: Response) => {
-  const query = 'SELECT * FROM tb_user'; // 적절한 테이블 이름으로 변경해주세요.
-
+  const query = 'SELECT * FROM tb_user';
   connection.query(query, (err, results) => {
     if (err) {
       console.error('쿼리부분 에러', err);
@@ -76,13 +75,66 @@ app.post('/api/register', async (req: Request, res: Response) => {
 });
 
 app.post('/write', async (req: Request, res: Response) => {
-  const information = req.body;
-  console.log(information);
+  const {nickName, title, text, gameName, genre, detailGenre, url, personnel, deadLine} = req.body;
+  const insertQuery = `INSERT INTO tb_posts (writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine) VALUES ('${nickName}', '${title}', '${text}', '${gameName}', '${genre}', '${detailGenre}', '${url}', '${personnel}', '${deadLine}')`
+  connection.query(insertQuery, (err, insertResult)=>{
+    if (err){
+      res.status(500).json({error : '글 작성중 오류가 발생했습니다.'})
+    } else {
+      res.json({status : 'success'});
+    }
+  })
 });
+
+app.get('/main', async(req: Request, res: Response)=> {
+  const query = 'SELECT * FROM tb_posts ORDER BY date DESC'; 
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('쿼리부분 에러', err);
+      res.status(500).json({ error: 'An error occurred while fetching data.' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get('/view/:num',async (req:Request, res:Response) => {
+  const num = req.params.num;
+  const selectQuerry = `SELECT * FROM tb_posts WHERE num = ${num}`
+
+  connection.query(selectQuerry, (err, results) => {
+    if (err) {
+      console.error('쿼리부분 에러', err);
+      res.status(500).json({ error: 'An error occurred while fetching data.' });
+    } else {
+      res.json(results);
+    }
+  });
+})
+
+app.delete('/delete/:num', (req:Request, res:Response)=>{
+  const num = req.params.num;
+  const deleteQuery = `DELETE FROM tb_posts WHERE num = ?`
+
+  connection.query(deleteQuery, [num], (err, result : mysql.OkPacket ) => {
+    if (err) {
+      console.error('쿼리 부분 에러', err);
+      res.status(500).json({ error: '데이터 삭제 중 오류가 발생했습니다.' });
+    } else {
+      if (result.affectedRows > 0) {
+        res.status(204).send(); // 삭제 성공 시 204 No Content 응답 반환
+      } else {
+        res.status(404).json({ error: '해당 넘버를 가진 리소스를 찾을 수 없습니다.' });
+      }
+    }
+  });
+})
 
 // 서버 시작
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+  
 });
 
 

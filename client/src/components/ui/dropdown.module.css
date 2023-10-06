@@ -1,0 +1,7 @@
+.dropdown-contain { position: relative; }
+.dropdown-contain > div > img { width: 24px; cursor: pointer; }
+.dropdown-contain > .dropdown-row { position: absolute; min-width: 120px; top:38px; right: 0; border: 1px solid var(--color-gray); background-color: var(--color-white); }
+.dropdown-contain > .dropdown-row > li { white-space: nowrap; padding: 5px 10px; text-align: center; cursor: pointer; font-weight: bold; }
+.dropdown-contain > .dropdown-row > li:not(:first-child) { border-top: 1px solid var(--color-gray); }
+.dropdown-contain > .dropdown-row > li:hover { background-color: var(--color-3); }
+.dropdown-contain > .dropdown-row > .red { color: var(--color-red); }

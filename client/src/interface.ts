@@ -21,6 +21,7 @@ export interface ModalContextType {
 //카드 프롭스 Onclick
 export interface CardProps {
     onClick: ()=> void;
+    data : listData;
 }
 
 export interface InputProps {
@@ -39,4 +40,36 @@ export interface ModalRegisterProps {
     onChange : (e : React.ChangeEvent<HTMLInputElement>)=> void;
     registerOnClick : ()=>void;
     inputValue : string
+}
+
+export interface SelectBoxProps {
+    title : string,
+    options : Array<string>,
+    onSelectOption : (option : string) => void
+}
+
+export interface listData {
+    num : number,
+    writer : string,
+    title : string,
+    content : string,
+    gameName : string,
+    genre : string,
+    detailGenre : string,
+    url : string,
+    personnel : string,
+    deadLine : string,
+    date : string 
+    
+}
+
+export interface dropDown {
+    children : React.ReactNode
+    options : Array<string>
+    onSelectOption : (option : string) => void
+}
+
+export interface ButtonSt1Props {
+    txt : string,
+    onClick : () => void
 }

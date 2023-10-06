@@ -77,9 +77,11 @@ input[type='number']::-webkit-outer-spin-button {
 
 button{ position: relative; background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer }
 
-textarea { border: unset; resize: none; }
+textarea { border: unset; resize: none; box-sizing: border-box; }
 textarea:focus { outline: none; }
 
+/* MARGIN */
+.mg-t20 { margin-top: 20px; }
 /* 폰트 */
 
 @font-face {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import Card from '../components/ui/Card'
 import Inner from '../components/layout/Inner'
 import Tab from '../components/ui/Tab'
@@ -9,10 +9,13 @@ import { LoginInfoRequest } from '../api/oauth'
 import { setUserInfo } from '../session'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import {listData} from '../interface'
 
 const Main = () => {
   const { openModal, setModalData } = useModal();
+  const [getData, setGetData] = useState<listData[]>([]);
   const navigate = useNavigate();
+
   //url에 토큰정보 있는지 확인
   const tokenRequest = async () => {
     LoginInfoRequest(LoginInfoRequestCallBack);
@@ -36,12 +39,20 @@ const Main = () => {
         default:
           break;
       }
-      console.log(respone)
     })
-    
   }
+
+  const onClickHandler = (num : number) =>{
+    console.log(num);
+  }
+
   useEffect( () => {
     tokenRequest();
+
+    axios.get(`${process.env.REACT_APP_SERVER_URL}/main`)
+    .then((respones)=>{
+      setGetData(respones.data)
+    })
   }, [])
 
   return (
@@ -57,7 +68,12 @@ const Main = () => {
         <Tab/>
         <InputSearch/>
         <Horizontal_4>
-          <Card onClick={()=>openModal('list')}/>
+          {
+            getData &&
+            getData.map((datas)=>(
+              <Card onClick={()=>navigate(`/view/${datas.num}`)} data={datas}/>
+            ))
+          }
         </Horizontal_4>
       </Inner>
       

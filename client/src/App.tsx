@@ -6,6 +6,7 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Modal from './components/layout/Modal';
 import Write from './pages/Write';
+import View from './pages/View'
 const App = () => {
   return (
     <>
@@ -14,6 +15,8 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Main/>} />
           <Route path='/write' element={<Write/>} />
+          <Route path='/modify/:num' element={<Write/>} />
+          <Route path='/view/:num' element={<View/>} />
           <Route path='/*' element={<NotFound/>} />
         </Routes>
       </div>

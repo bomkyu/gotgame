@@ -41,20 +41,18 @@ const Main = () => {
       }
     })
   }
-
-  const onClickHandler = (num : number) =>{
-    console.log(num);
-  }
-
+  
   useEffect( () => {
     tokenRequest();
+    fetchAll();
+  }, [])
 
+  const fetchAll = () => {
     axios.get(`${process.env.REACT_APP_SERVER_URL}/main`)
     .then((respones)=>{
       setGetData(respones.data)
     })
-  }, [])
-
+  }
   return (
     <>
       <div className='visual-wrap'>

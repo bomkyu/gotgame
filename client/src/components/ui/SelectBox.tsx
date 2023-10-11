@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react'
 import style from './selectbox.module.css'
 import { SelectBoxProps } from '../../interface';
 
-const SelectBox = ({title, options, onSelectOption} : SelectBoxProps) => {
+const SelectBox = ({title, options, onSelectOption, value} : SelectBoxProps) => {
     const [click, setClick] = useState(false);
     const [selectOption, setSelectOption] = useState(null);
 
+    //수정 페이지에서 value값이 있을때
     useEffect(()=>{
-      if(selectOption !== null){
-        //setClick(true);
-        console.log(selectOption);
+      if(value){
+        handleOptionClick(value)
       }
-    },[selectOption])
+    },[value])
 
+    //option들을 클릭했을때
     const handleOptionClick = (option : any) => {
       setSelectOption(option);
       onSelectOption(option)

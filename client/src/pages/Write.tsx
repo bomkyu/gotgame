@@ -52,37 +52,61 @@ const Write = () => {
       if(num){
         try{
         const respones = await axios.get(`${process.env.REACT_APP_SERVER_URL}/view/${num}`);
-        console.log();
         setInformation(respones.data[0])
         }catch(err){
           alert(err);
         }
       }
     }
-    
     fetchData();
   }, [num])
+
+  useEffect(()=> {
+    console.log('useEffectWrite',information)
+  },[information])
+
   //selectBoxHandler
   const SelectedHandler = (option : string) => {
     setInformation({...information, genre : option});
   }
 
-  //클릭 핸들러
+  //등록 핸들러
   const onClickHandler = () => {
-    console.log(information);
     axios.post(`${process.env.REACT_APP_SERVER_URL}/write`,{...information, nickName : nickName})
       .then((respones)=>{
         navigate('/');
       })
+  }
 
-  } 
+  //수정 핸들러
+  const modifyHandler = async () => {
+    try {
+      // 서버에 수정 요청 보내기
+      const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/modify/${num}`,information);
+      
+      // 서버 응답 처리
+      if (response.status === 200) {
+        navigate('/');
+        console.log('수정 성공');
+
+      } else {
+        // 수정 실패
+        console.error('수정 실패');
+
+      }
+    } catch (error) {
+      // 오류 처리
+      console.error('오류 발생:', error);
+
+    }
+  }
 
   return (
     <div className='inner'>
       <section>
         <Title title="1. 모집정보 및 디스코드 URL을 입력해 주세요."/>
         <Horizontal_2>
-          <li><SelectBox title='장르' options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']} onSelectOption={SelectedHandler}/></li>
+          <li><SelectBox title='장르' options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']} onSelectOption={SelectedHandler} value={genre}/></li>
           <li>
             <Input name="detailGenre" title="세부장르" value={detailGenre} onChange={onChange}/>
             {
@@ -107,10 +131,15 @@ const Write = () => {
       <section>
         <Title title="2. 간략한 정보를 설명해 주세요."/>
         <Input name="title" title="제목" value={title} onChange={onChange}/>
-        <textarea className='text-area mg-t20' name='text' onChange={onChange} value={content}/>
+        <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
 
         <div className='flx jsc'>
+          {
+            num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
+            :
             <ButtonSt1 txt='등록' onClick={onClickHandler}/>
+          }
+            
           </div>
       </section>
     </div>

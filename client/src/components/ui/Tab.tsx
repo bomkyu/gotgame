@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './tab.module.css'
+
 const Tab = () => {
   return (
     <ul className={`${style['tab-list']}`}>

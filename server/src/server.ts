@@ -74,18 +74,6 @@ app.post('/api/register', async (req: Request, res: Response) => {
   });
 });
 
-app.post('/write', async (req: Request, res: Response) => {
-  const {nickName, title, text, gameName, genre, detailGenre, url, personnel, deadLine} = req.body;
-  const insertQuery = `INSERT INTO tb_posts (writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine) VALUES ('${nickName}', '${title}', '${text}', '${gameName}', '${genre}', '${detailGenre}', '${url}', '${personnel}', '${deadLine}')`
-  connection.query(insertQuery, (err, insertResult)=>{
-    if (err){
-      res.status(500).json({error : '글 작성중 오류가 발생했습니다.'})
-    } else {
-      res.json({status : 'success'});
-    }
-  })
-});
-
 app.get('/main', async(req: Request, res: Response)=> {
   const query = 'SELECT * FROM tb_posts ORDER BY date DESC'; 
 
@@ -131,6 +119,37 @@ app.delete('/delete/:num', (req:Request, res:Response)=>{
   });
 })
 
+app.post('/write', async (req: Request, res: Response) => {
+  const {nickName, title, content, gameName, genre, detailGenre, url, personnel, deadLine} = req.body;
+  const insertQuery = `INSERT INTO tb_posts (writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine) VALUES ('${nickName}', '${title}', '${content}', '${gameName}', '${genre}', '${detailGenre}', '${url}', '${personnel}', '${deadLine}')`
+  connection.query(insertQuery, (err, insertResult)=>{
+    if (err){
+      res.status(500).json({error : '글 작성중 오류가 발생했습니다.'})
+    } else {
+      res.json({status : 'success'});
+    }
+  })
+});
+
+app.put('/modify/:num', (req:Request, res:Response)=>{
+  const num = req.params.num;
+  const { title, content, gameName, genre, detailGenre, url, personnel, deadLine} = req.body;
+  
+  const updateQuerry = `
+  UPDATE tb_posts
+    SET title = ?, content = ?, gameName = ?, genre = ?, detailGenre = ?, url = ?,personnel = ?, deadLine = ?
+  WHERE 
+  num = ?`;
+
+  connection.query(updateQuerry, [ title, content, gameName, genre, detailGenre, url, personnel, deadLine, num], (error, result)=>{
+    if (error) {
+      res.status(500).json({ message: '데이터베이스 업데이트 오류' });
+    } else {
+      res.status(200).json({ message: '데이터 업데이트 완료' });
+    }
+  })
+
+})
 // 서버 시작
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

@@ -45,6 +45,7 @@ export interface ModalRegisterProps {
 export interface SelectBoxProps {
     title : string,
     options : Array<string>,
+    value : string,
     onSelectOption : (option : string) => void
 }
 

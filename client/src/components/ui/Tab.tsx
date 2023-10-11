@@ -1,14 +1,16 @@
 import React from 'react'
 import style from './tab.module.css'
+import { Tabs } from '../../interface'
 
-const Tab = () => {
+const Tab = ({onClick, selected} : Tabs) => {
+  const tabArr = ['ALL', 'RPG', 'FPS', 'TPS', 'MOBILE'];
   return (
     <ul className={`${style['tab-list']}`}>
-      <li><b>전체</b></li>
-      <li><b>RPG</b></li>
-      <li><b>FPS</b></li>
-      <li><b>TPS</b></li>
-      <li><b>MOBILE</b></li>
+      {
+        tabArr.map((param)=>(
+          <li key={param} onClick={()=>onClick(`${param}`)} className={selected === param ? style['active'] : ''}><b>{param}</b></li>
+        ))
+      }
     </ul>
   )
 }

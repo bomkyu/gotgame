@@ -74,3 +74,13 @@ export interface ButtonSt1Props {
     txt : string,
     onClick : () => void
 }
+
+export interface Tabs {
+    selected : string,
+    onClick : (option : string) => void
+}
+
+export interface InputSearchprops {
+    onChange : (e : React.ChangeEvent<HTMLInputElement>) => void
+    value : string
+}

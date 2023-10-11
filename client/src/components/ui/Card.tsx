@@ -3,7 +3,6 @@ import style from './card.module.css'
 import { CardProps } from '../../interface'
 
 const Card : React.FC<CardProps> = ({onClick, data}) => {
-  console.log(data);
   return (
     <li className={`${style.card}`} onClick={onClick}>
       <div className={`${style['card-header']}`}>        

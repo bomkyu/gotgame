@@ -1,8 +1,10 @@
 import React from 'react'
 import style from './inputSearch.module.css'
-const InputSearch = () => {
+import { InputSearchprops } from '../../interface'
+
+const InputSearch = ({onChange, value} : InputSearchprops) => {
   return (
-    <input type="text" id='search' className={`${style.search}`} placeholder='검색어를 입력해 주세요.'/>
+    <input type="text" id='search' className={`${style.search}`} placeholder='검색어를 입력해 주세요.' onChange={onChange} value={value}/>
   )
 }
 

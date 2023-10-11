@@ -4,3 +4,5 @@
 .tab-list > li > b:hover {color: #4E4FEB;}
 .tab-list > li > b:after { position: absolute; width: 0%; height: 2px; bottom: -4px; left: 50%; background-color: #4E4FEB; transform: translateX(-50%); transition: width .25s ease-in-out; content: "";}
 .tab-list > li > b:hover:after { width: 100%; }
+.tab-list > li.active > b { color: #4E4FEB; }
+.tab-list > li.active > b:after {width: 100%;}

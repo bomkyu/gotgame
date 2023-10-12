@@ -25,7 +25,7 @@ app.use(cors());
 
 //카카오 토큰
 app.post('/api/token', (req : Request, res: Response) =>{
-  console.log(req.body)
+  //console.log(req.body)
 })
 
 // 라우터 등록
@@ -49,7 +49,7 @@ app.post('/api/register', async (req: Request, res: Response) => {
       console.error('쿼리부분 에러', err);
       res.status(500).json({ error: 'An error occurred while fetching data.' });
     } else {
-      console.log(results.length);
+      //console.log(results.length);
       if(results.length > 0){
         res.json({ status: 'login', userInfo : results[0] }); // 클라이언트에게 에러 응답 보내기
       }else{

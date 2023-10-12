@@ -10,6 +10,7 @@ import { setUserInfo } from '../session'
 import axios from 'axios'
 import { parsePath, useNavigate } from 'react-router-dom'
 import {listData} from '../interface'
+import { escapeRegExp } from '../utils'
 
 const Main = () => {
   const { openModal, setModalData } = useModal();
@@ -58,22 +59,54 @@ const Main = () => {
       setGetData(respones.data)
     })
   }
+
   //탭 했을때 필터링 될 데이터들
   const tabClickHandler = (option : string) => {
     setSelectedTab(option);
-    const dataFilter = getData.filter(param => param.genre === option);
-    setFilterData(dataFilter);
+
+    if (option === 'ALL') {
+      setFilterData([]);
+    } else {
+
+      const dataFilter = getData.filter((param) => param.genre === option);
+      console.log(dataFilter);
+      // 만약 검색어가 있으면 검색어 필터를 먼저 적용하고 탭 필터를 적용
+      if (searchInputValue !== '') {
+        
+        const escapedValue = escapeRegExp(searchInputValue);
+        const regex = new RegExp(escapedValue, 'i');
+        const readyInputValueFilter = dataFilter.filter((param) => regex.test(param.title) || regex.test(param.content));
+        setSearachData(readyInputValueFilter);
+        setFilterData(dataFilter);
+      } else {
+        setFilterData(dataFilter);
+      }
+    }
   }
 
   //검색 했을때 필터링 될 데이터
   const searchOnChange = (e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>{
-    const {value} = e.target
+    const { value } = e.target;
+    const escapedValue = escapeRegExp(value);
+    const regex = new RegExp(escapedValue, 'i');
+
     setSearchInputValue(value); //value값 저장
 
-    const searchFilter = filterData.filter(param=> param.title === value || param.content === value);
-    console.log(searchFilter)
-    setSearachData(searchFilter);
+    if (value === '') {
+      setSearachData([]);
+    } else {
+      if(selectedTab === 'ALL'){
+        const searchData = getData.filter((param) => regex.test(param.title) || regex.test(param.content));
+        setSearachData(searchData)
+      }else{
+        const searchData = filterData.filter((param) => regex.test(param.title) || regex.test(param.content));
+        console.log(searchData);
+        setSearachData(searchData);
+      }
+    }
   }
+
+  console.log('filterData', filterData);
 
   return (
     <>
@@ -89,21 +122,24 @@ const Main = () => {
         <InputSearch onChange={searchOnChange} value={searchInputValue}/>
         <Horizontal_4>
         {
-          searchData.length > 0 ? (
-            searchData.map((data) => (
-              <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-            ))
-          ) : (
-          filterData.length > 0 ? (
-            filterData.map((data) => (
-              <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-            ))
-          ) : (
-            getData.map((data) => (
-              <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-            ))
-           ))
-        }
+          searchInputValue !== '' ? (
+            searchData.length > 0 ? (
+              searchData.map((data) => (
+                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
+              ))
+            ) : (
+              <p>데이터가 없소용</p>
+            )
+            ) : selectedTab !== 'ALL' ? (
+              filterData.map((data) => (
+                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
+              ))
+            ) : (
+              getData.map((data) => (
+                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
+              ))
+            )
+          }
         </Horizontal_4>
       </Inner>
       

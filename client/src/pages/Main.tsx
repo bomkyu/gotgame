@@ -106,7 +106,12 @@ const Main = () => {
     }
   }
 
-  console.log('filterData', filterData);
+  //카드리스트 렌더
+  const renderCards = (dataList : Array<listData>) => {
+    return dataList.map((data) => (
+      <Card onClick={() => navigate(`/view/${data.num}?tab=${selectedTab}`)} data={data} />
+    ));
+  };
 
   return (
     <>
@@ -124,20 +129,14 @@ const Main = () => {
         {
           searchInputValue !== '' ? (
             searchData.length > 0 ? (
-              searchData.map((data) => (
-                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-              ))
+              renderCards(searchData)
             ) : (
               <p>데이터가 없소용</p>
             )
             ) : selectedTab !== 'ALL' ? (
-              filterData.map((data) => (
-                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-              ))
+              renderCards(filterData)
             ) : (
-              getData.map((data) => (
-                <Card onClick={() => navigate(`/view/${data.num}`)} data={data} />
-              ))
+              renderCards(getData)
             )
           }
         </Horizontal_4>

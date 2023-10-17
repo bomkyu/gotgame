@@ -87,7 +87,6 @@ const Write = () => {
       // 서버 응답 처리
       if (response.status === 200) {
         navigate('/');
-        console.log('수정 성공');
 
       } else {
         // 수정 실패

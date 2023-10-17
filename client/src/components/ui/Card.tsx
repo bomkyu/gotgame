@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import style from './card.module.css'
 import { CardProps } from '../../interface'
 
-const Card : React.FC<CardProps> = ({onClick, data}) => {
+const Card : React.FC<CardProps> = ({onClick, data, key}) => {
   return (
-    <li className={`${style.card}`} onClick={onClick}>
+    <li className={`${style.card}`} onClick={onClick} key={key}>
       <div className={`${style['card-header']}`}>        
         <p>{data.writer}</p>
         <p>{data.genre} | <span className={`${style.color1}`}>모집중</span></p>

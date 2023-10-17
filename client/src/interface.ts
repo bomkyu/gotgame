@@ -22,6 +22,7 @@ export interface ModalContextType {
 export interface CardProps {
     onClick: ()=> void;
     data : listData;
+    key : number
 }
 
 export interface InputProps {
@@ -83,4 +84,13 @@ export interface Tabs {
 export interface InputSearchprops {
     onChange : (e : React.ChangeEvent<HTMLInputElement>) => void
     value : string
+}
+
+export interface PagingProps {
+    totalPages : number,
+    currentPage : number, 
+    goToPreviousPage : ()=> void,
+    goToNextPage : ()=> void,
+    displayedPages : Array<number>;
+    setCurrentPage: (pageNumber: number) => void;
 }

@@ -148,7 +148,6 @@ app.put('/modify/:num', (req:Request, res:Response)=>{
       res.status(200).json({ message: '데이터 업데이트 완료' });
     }
   })
-
 })
 // 서버 시작
 app.listen(port, () => {

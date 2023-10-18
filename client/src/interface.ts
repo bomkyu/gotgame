@@ -22,7 +22,6 @@ export interface ModalContextType {
 export interface CardProps {
     onClick: ()=> void;
     data : listData;
-    key : number
 }
 
 export interface InputProps {

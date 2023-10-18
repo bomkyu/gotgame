@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PagingProps } from '../../interface';
 import style from './paging.module.css'
 const Paging = ({totalPages, currentPage, goToPreviousPage, goToNextPage, displayedPages, setCurrentPage} : PagingProps) => {
 
-    
   return (
     <div className={style.pagination}>
     
@@ -12,7 +11,9 @@ const Paging = ({totalPages, currentPage, goToPreviousPage, goToNextPage, displa
     {displayedPages.map((pageNumber) => (
         <button
           key={pageNumber}
-          onClick={() => setCurrentPage(pageNumber)}
+          onClick={
+            () => setCurrentPage(pageNumber)
+          }
           className={pageNumber === currentPage ? style['active'] : ''}
         >
           {pageNumber}

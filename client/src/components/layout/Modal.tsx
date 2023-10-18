@@ -30,9 +30,6 @@ const Modal = () => {
       }
     })
   }
-  useEffect(()=> {
-    console.log(modalData);
-  }, [modalData])
 
   //사용자가 closeModal 선택 했을 시 State 클리어 함수
   const cleanUp = () => {

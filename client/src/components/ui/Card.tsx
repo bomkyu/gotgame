@@ -11,7 +11,8 @@ const Card : React.FC<CardProps> = ({onClick, data, key}) => {
       </div>
       <div className={`${style['card-content']}`}>
         <p>{data.title}</p>
-        <ul className={`${style['game-value']}`}>
+        
+        <ul className={`tag-wrap ${style['tag-st']}`}>
           {data.detailGenre.split(',').map((params)=>(
             <li>{params}</li>
           ))}

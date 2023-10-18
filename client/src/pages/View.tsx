@@ -104,7 +104,16 @@ const View = () => {
               <li>
                 <dl>
                   <dt>세부 장르</dt>
-                  <dd>{detailGenre}</dd>
+                    <dd>
+                      {
+                        //detailGenre
+                        <ul className={`tag-wrap ${style['tag-st']}`}>
+                          {detailGenre.split(',').map((params)=>(
+                            <li>{params}</li>
+                          ))}
+                        </ul>
+                      }
+                    </dd>
                 </dl>
                 
               </li>

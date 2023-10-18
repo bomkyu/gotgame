@@ -45,4 +45,3 @@ header > .inner > .header-util > *:not(:last-child) { margin-right: 10px; }
 .tag-wrap > li:not(:last-child) { margin-right: 10px; }
 
 .view-wrap h2 { font-size: 32px; font-weight: bold; }
-

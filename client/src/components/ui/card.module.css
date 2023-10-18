@@ -8,7 +8,7 @@
 
 .card-content { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--color-gray); }
 .card-content > p { font-size: 20px; font-weight: bold; }
-
+.tag-st > li { font-size: 12px; }
 .game-value { display: flex; margin: 0 -5px; margin-top: 10px; }
 .game-value > li { padding: 5px; border-radius: 30px; font-size: 14px; }
 

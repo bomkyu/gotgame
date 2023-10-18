@@ -8,12 +8,13 @@ import { useModal } from '../contexts/ModalContext'
 import { LoginInfoRequest } from '../api/oauth'
 import { setUserInfo } from '../session'
 import axios from 'axios'
-import { parsePath, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {listData} from '../interface'
 import { escapeRegExp } from '../utils'
 import Paging from '../components/layout/Paging'
 
 const Main = () => {
+  //데이터 저장
   const { openModal, setModalData } = useModal();
   const [getData, setGetData] = useState<listData[]>([]); //데이터를 전부 저장
   const [filterData, setFilterData] = useState<listData[]>([]); //필터 데이터 저장
@@ -22,18 +23,12 @@ const Main = () => {
   const [searchData, setSearachData] = useState<listData[]>([]); //검색된 DATA가 들어가는 STATE
 
   //페이징
+  const [totalPages, setTotalPages] = useState(0);
+  const [displayedPages, setdisplayedPages] = useState<number[]>([]); //사용자에게 보여줘야하는 페이지들
+
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const itemsPerPage = 12; // 한 페이지에 보여질 아이템 수
   const pagesPerDisplay = 5; // 페이지당 표시할 페이지 수
-
-  const totalData = searchInputValue !== ''
-    ? searchData
-    : selectedTab !== 'ALL'
-    ? filterData
-    : getData;
-  const totalItems = totalData.length; // 전체 아이템 수
-  const totalPages = Math.ceil(totalItems / itemsPerPage); // 전체 페이지 수
-  
   
   const navigate = useNavigate();
 
@@ -79,7 +74,7 @@ const Main = () => {
   //탭 했을때 필터링 될 데이터들
   const tabClickHandler = (option : string) => {
     setSelectedTab(option);
-
+    setCurrentPage(1);
     if (option === 'ALL') {
       setFilterData([]);
     } else {
@@ -123,14 +118,6 @@ const Main = () => {
     }
   }
 
-  //카드리스트 렌더 (페이징 추가)
-
-  /*const renderCards = (dataList : Array<listData>) => {
-    return dataList.map((data) => (
-      <Card key={data.num} onClick={() => navigate(`/view/${data.num}?tab=${selectedTab}`)} data={data} />
-    ));
-  };*/
-
   const renderCards = (dataList : Array<listData>) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -142,6 +129,41 @@ const Main = () => {
   };
 
   //페이징
+  useEffect(()=> {
+    const totalData = searchInputValue !== ''
+    ? searchData
+    : selectedTab !== 'ALL'
+    ? filterData
+    : getData;
+    const totalItems = totalData.length; // 전체 아이템 수
+    setTotalPages(Math.ceil(totalItems / itemsPerPage))
+  })
+  
+  useEffect(() => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+  
+    // 계산할 페이지 범위의 시작과 끝을 계산
+    const blockSize = pagesPerDisplay;
+    const blockCount = Math.ceil(totalPages / blockSize);
+    const blockIndex = Math.ceil(currentPage / blockSize);
+    const startPage = (blockIndex - 1) * blockSize + 1;
+    let endPage = startPage + blockSize - 1;
+  
+    // 마지막 페이지 블록에서 블록이 꽉 차지 않으면 조정
+    if (endPage > totalPages) {
+      endPage = totalPages;
+    }
+  
+    // 페이지 범위를 계산
+    const displayedPages = pageNumbers.slice(startPage - 1, endPage);
+  
+    console.log(displayedPages);
+    setdisplayedPages(displayedPages);
+  }, [currentPage, totalPages, pagesPerDisplay]);
+
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -153,34 +175,6 @@ const Main = () => {
       setCurrentPage(currentPage + 1);
     }
   };
-
-  useEffect(()=>{
-    
-  })
-
-  const renderPagination = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
-
-    const startIndex = (currentPage - 1) * pagesPerDisplay;
-    const endIndex = startIndex + pagesPerDisplay;
-    const displayedPages = pageNumbers.slice(startIndex, endIndex);
-    
-    
-    return(
-        <Paging
-        totalPages={totalPages} //전체 페이지
-        currentPage={currentPage} //현재 페이지
-        goToPreviousPage={goToPreviousPage} //이전페이지 가는 함수
-        goToNextPage={goToNextPage}//다음페이지 가는 함수
-        displayedPages={displayedPages}//페이징 배열
-        setCurrentPage={setCurrentPage}
-        />
-    )
-  }
-  
 
   return (
     <>
@@ -210,7 +204,14 @@ const Main = () => {
           }
         </Horizontal_4>
       </Inner>
-      {renderPagination()}
+      {<Paging
+        totalPages={totalPages} //전체 페이지
+        currentPage={currentPage} //현재 페이지
+        goToPreviousPage={goToPreviousPage} //이전페이지 가는 함수
+        goToNextPage={goToNextPage}//다음페이지 가는 함수
+        displayedPages={displayedPages}//사용자에게 표시해야하는 페이지 번호
+        setCurrentPage={setCurrentPage}
+        />}
     </>
   )
 }

@@ -124,7 +124,7 @@ const Write = () => {
           <li><Input name="gameName" title="게임이름" value={gameName} onChange={onChange}/></li>
           <li><Input name="url" title="디스코드 URL" value={url} onChange={onChange}/></li>
           <li><Input name="personnel" title="인원" value={personnel} onChange={onChange}/></li>
-          <li><Input name="deadLine" title="날짜" value={deadLine} onChange={onChange}/></li>
+          <li><Input name="deadLine" title="마감 날짜" value={deadLine} onChange={onChange}/></li>
         </Horizontal_2>
       </section>
       <section>

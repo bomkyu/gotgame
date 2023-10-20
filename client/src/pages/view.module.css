@@ -4,6 +4,7 @@
 .write-info > li { position: relative; font-size: 20px; font-weight: bold; }
 .write-info > li:not(:first-child)::after { position: absolute; width: 2px; height: 10px; top: 50%; left: -8px; transform: translateY(-50%); background-color : var(--color-gray); content: ""; }
 
+li { cursor: auto !important; }
 dl { display: flex; font-size: 20px; }
 dl > * { font-size: 20px; font-weight: bold; }
 dl > dt { width: 102px; margin-right: 20px; }

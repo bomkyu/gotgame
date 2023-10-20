@@ -140,6 +140,7 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
   //----------------------------- 탭 및 검색 -----------------------------
 
   const tabClickHandler = (option : string) => {
+    dispatch(setCurrentPage(1));
     dispatch(setTab(option));
   }
 

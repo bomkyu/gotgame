@@ -93,3 +93,9 @@ export interface PagingProps {
     displayedPages : Array<number>;
     setCurrentPage: (pageNumber: number) => void;
 }
+
+export interface CalendarCustomProps {
+    onchange : (value: any, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    title : string,
+    value : string
+}

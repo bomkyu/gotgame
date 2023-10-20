@@ -3,7 +3,7 @@ import style from './dropdown.module.css'
 import { dropDown } from '../../interface';
 const DropDown = ({children, options, onSelectOption} : dropDown) => {
     
-    const [click, setClick] = useState(false);
+  const [click, setClick] = useState(false);
 
   return (
     <div className={style['dropdown-contain']}>

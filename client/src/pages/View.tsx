@@ -73,7 +73,7 @@ const View = () => {
                 {
                   sessionUser && sessionUser.nickName === writer ?
                   <DropDown options={['수정', '삭제']} onSelectOption={onSelectOption}>
-                    <img src='../images/ic_setting.png'/>
+                    <img src='../images/ic_setting.png' alt='수정버튼 이미지'/>
                   </DropDown>
                   :
                   ''

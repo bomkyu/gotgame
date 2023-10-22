@@ -140,7 +140,7 @@ const View = () => {
           <div className={style.content}>
             {content}
           </div>
-          <div className='flx jsc'>
+          <div className='flx jsc mg-t40'>
             <ButtonSt1 txt="목록" onClick={buttonClickHandler}/>
           </div>
         </div>

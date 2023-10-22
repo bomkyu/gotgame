@@ -41,6 +41,21 @@ app.get('/api/data', (req: Request, res: Response) => {
   });
 });
 
+//회원가입시, 중복되는 닉네임 검사를 위한 닉네임 가져오기
+app.get('/api/register', async (req: Request, res:Response) => {
+  const nickName = req.query.nickName;
+  const query = 'SELECT nickName FROM tb_user WHERE nickName = ?;'
+
+  connection.query(query,[nickName], (err, results) => {
+    if (err) {
+      console.error('쿼리부분 에러', err);
+      res.status(500).json({ error: 'An error occurred while fetching data.' });
+    } else {
+      res.json(results);
+    }
+  })
+})
+
 // 인증정보 유효성 검사 
 app.post('/api/register', async (req: Request, res: Response) => {
   const query : string = `SELECT id, nickName, platform FROM tb_user WHERE id = '${req.body.id}'`

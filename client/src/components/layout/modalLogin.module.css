@@ -1,0 +1,5 @@
+.title { font-size: 36px; font-weight: bold; margin: 32px 0; }
+.login-wrap { display: flex; gap: 20px; margin-top: 42px; }
+.login-wrap > p { width: 148px; height: 148px; box-shadow: 5px 5px 20px 0px #ccc; cursor: pointer; }
+.login-wrap > p:first-child { background-color: #FFF; }
+.login-wrap > p:last-child { background-color: #fae100; }

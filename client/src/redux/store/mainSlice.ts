@@ -2,17 +2,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface MainState {
-    selectedTab: string;
-    currentPage: number;
-    searchInputValue: string;
-   
-  }
+  selectedTab: string;
+  currentPage: number;
+  searchInputValue: string;
+}
 
 const initialState: MainState = {
   selectedTab: 'ALL',
   currentPage: 1,
   searchInputValue : ''
-  // 초기 상태 추가
 };
 
 const mainSlice = createSlice({

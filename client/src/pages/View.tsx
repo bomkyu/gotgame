@@ -8,12 +8,15 @@ import style from './view.module.css'
 import { ButtonSt1 } from '../components/ui/Buttons';
 import DropDown from '../components/ui/DropDown';
 import { getUserInfo } from '../session';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/rootReducer';
 
 const View = () => {
     const { num } = useParams();
     const [getData, setGetData] = useState<listData[]>([]);
 
     const navigate = useNavigate();
+    const userNickName = useSelector((state: RootState) => state.user.userInfo.nickName); // 유저 닉네임 가져오기
 
     useEffect(() => {
         const fetchData = async () => {
@@ -40,7 +43,7 @@ const View = () => {
       switch (option) {
         case '수정':
           navigate(`/modify/${num}`, {state : { nickName : writer}})
-          break;
+        break;
         
         case '삭제':
           try {
@@ -56,7 +59,8 @@ const View = () => {
           } catch (error) {
             alert(`삭제실패 오류코드 : ${error} 관리자에게 문의하세요.`)
           }
-          break;
+        break;
+
         default:
           break;
       }
@@ -71,12 +75,11 @@ const View = () => {
               <h2 className={style.title}>
                 {title}
                 {
-                  sessionUser && sessionUser.nickName === writer ?
-                  <DropDown options={['수정', '삭제']} onSelectOption={onSelectOption}>
-                    <img src='../images/ic_setting.png' alt='수정버튼 이미지'/>
-                  </DropDown>
-                  :
-                  ''
+                  userNickName === writer && (
+                    <DropDown options={['수정', '삭제']} onSelectOption={onSelectOption}>
+                      <img src='../images/ic_setting.png' alt='수정버튼 이미지'/>
+                    </DropDown>
+                  )
                 }
                 
               </h2>

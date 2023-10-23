@@ -1,6 +1,7 @@
 
-export const setUserInfo = (userInfo : object) => {
-    sessionStorage.setItem('userInfo',JSON.stringify(userInfo));
+export const setsessionUserInfo = (userInfo : object) => {
+    const obj = {isLoggedIn : true, userInfo}
+    sessionStorage.setItem('userInfo',JSON.stringify(obj));
 }
 
 export const getUserInfo = () => {
@@ -9,6 +10,6 @@ export const getUserInfo = () => {
     return changeJson;
 }
 
-export const logOut = () => {
+export const sessionlogOut = () => {
     sessionStorage.removeItem('userInfo');
 }

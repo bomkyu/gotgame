@@ -67,8 +67,8 @@ const Write = () => {
     const fetchData = async () => {
       if(num){
         try{
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/view/${num}`);
-        if (response.data && response.data.length > 0) {
+          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/view/${num}`);
+          if (response.data && response.data.length > 0) {
             setInformation(response.data[0]);
             const detail = response.data[0].detailGenre;
             const detail_arr = detail.split(",");
@@ -140,7 +140,7 @@ const Write = () => {
 
       const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/modify/${num}`,information);
       if (response.status === 200) {
-        navigate('/');
+        navigate(`/view/${num}`);
 
       } else {
         alert('수정에 실패했습니다.');
@@ -177,7 +177,9 @@ const Write = () => {
           <li><Input name="gameName" title="게임이름" value={gameName} onChange={onChange}/></li>
           <li><Input name="url" title="디스코드 URL" value={url} onChange={onChange}/></li>
           <li><Input name="personnel" title="인원" value={personnel} onChange={onChange}/></li>
-          <li><CalendarCustom title="마감 날짜" onchange={CalendarChange} value={deadLine}/></li>
+          <li>
+            <CalendarCustom title="마감 날짜" onchange={CalendarChange} value={deadLine}/>
+          </li>
         </Horizontal_2>
       </section>
       <section>

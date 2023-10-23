@@ -4,7 +4,6 @@ import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
 dotenv.config(); // .env 파일의 환경 변수를 process.env에 등록
 
 const app = express();
@@ -40,6 +39,9 @@ app.get('/api/data', (req: Request, res: Response) => {
     }
   });
 });
+
+//매일 자정에 실행되는 스케줄링 작업
+
 
 //회원가입시, 중복되는 닉네임 검사를 위한 닉네임 가져오기
 app.get('/api/register', async (req: Request, res:Response) => {

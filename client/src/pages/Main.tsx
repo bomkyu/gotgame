@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // API 및 데이터 처리
 import { LoginInfoRequest } from '../api/oauth';
 import axios from 'axios';
-import { setUserInfo } from '../session';
+import { setsessionUserInfo } from '../session';
 import { useNavigate } from 'react-router-dom';
 
 // 데이터 인터페이스 및 유틸리티
@@ -23,9 +23,9 @@ import { listData } from '../interface';
 import { escapeRegExp } from '../utils';
 
 // Redux 액션 및 상태
-import { setTab, setCurrentPage, setSearchInputValue } from '../redux/store/mainSlice';
+import { setTab, setCurrentPage, setSearchInputValue, } from '../redux/store/mainSlice';
+import { setUserInfo } from '../redux/store/userSlice';
 import { RootState } from '../redux/rootReducer';
-
 
 const Main = () => {
   // Redux 상태 및 dispatch
@@ -64,7 +64,8 @@ const Main = () => {
             setModalData(data);
             break;
           case 'login':
-            setUserInfo(response.data.userInfo);
+            dispatch(setUserInfo(response.data.userInfo)) //redux에 로그인정보 저장
+            setsessionUserInfo(response.data.userInfo); //session에 로그인정보 저장
             navigate('/');
             break;
           default:

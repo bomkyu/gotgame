@@ -1,15 +1,32 @@
-import React,{ useState, useEffect } from 'react'
-import { useModal } from '../../contexts/ModalContext'
+import React,{ useState } from 'react'
+
+// 커스텀 컴포넌트
 import { useNavigate } from 'react-router-dom';
 import ModalLogin from './ModalLogin';
 import ModalRegister from './ModalRegister';
+
+// API 및 데이터 처리
 import axios from 'axios';
-import {setUserInfo} from '../../session'
+
+// 컨텍스트 및 상태 관리
+import {setsessionUserInfo} from '../../session'
+import { useModal } from '../../contexts/ModalContext'
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/rootReducer';
+import { setUserInfo } from '../../redux/store/userSlice';
+
+interface UserData {
+  id: string;
+  nickName: string;
+  platform: string;
+}
+
 const Modal = () => {
+  
   const { modalStatus, modalType, closeModal, setModalData, modalData } = useModal();
-  //const [userInfo, setUserInfo] = useState({});
   const [inputValue , setInputValue] = useState('');
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //닉네임 Input 함수
@@ -32,9 +49,24 @@ const Modal = () => {
         //중복이 아니면 server단에 회원가입 요청
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/register`, { ...modalData, nickName: inputValue });
         if (response.data.status === 'registerSuccess') {
-          setUserInfo({ ...modalData, nickName: inputValue });
-          cleanUp();
-          navigate('/');
+          
+          if ('id' in modalData && 'platform' in modalData) {
+            const { id, platform } = modalData;
+            const newObj: UserData = {
+              id : String(id),
+              nickName: inputValue,
+              platform : String(platform)
+            };
+
+            setsessionUserInfo(newObj);
+            dispatch(setUserInfo(newObj))
+            cleanUp();
+            navigate('/');
+
+            // 이제 id와 platform을 안전하게 사용할 수 있습니다.
+          } else {
+            alert('에러발생')
+          }
         } else {
           alert('에러!');
         }
@@ -46,7 +78,6 @@ const Modal = () => {
 
   //사용자가 closeModal 선택 했을 시 State 클리어 함수
   const cleanUp = () => {
-    setUserInfo({});
     setInputValue('');
     setModalData({})
     closeModal();

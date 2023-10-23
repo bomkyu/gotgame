@@ -20,5 +20,8 @@
     "start": "nodemon --exec yarn ts-node src/server.ts",
     "dev": "yarn nodemon src/server.ts",
     "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^3.0.10"
   }
 }

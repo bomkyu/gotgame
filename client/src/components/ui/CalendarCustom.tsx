@@ -33,7 +33,7 @@ const CalendarCustom = ({ onchange , title, value } : CalendarCustomProps) => {
           <Calendar
             minDate={moment().toDate()}
             onChange={onchange}
-            formatDay={(date) => moment(date).format("DD")}
+            formatDay={(locale, date) => moment(date).format("DD")}
             value={value}
           />
         }

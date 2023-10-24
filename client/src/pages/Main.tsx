@@ -77,7 +77,7 @@ const Main = () => {
   // 데이터 로드 함수
   const fetchAll = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/main`);
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/main`);
       setGetData(response.data);
     } catch (error) {
       console.log('데이터를 가져오는 중 오류 발생:', error);

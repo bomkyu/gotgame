@@ -7,7 +7,18 @@ const Card : React.FC<CardProps> = ({onClick, data}) => {
     <li className={`${style.card}`} onClick={onClick}>
       <div className={`${style['card-header']}`}>        
         <p>{data.writer}</p>
-        <p>{data.genre} | <span className={`${style.color1}`}>모집중</span></p>
+        <p>
+          {data.genre}
+           | 
+          {
+            data.status === 0 ? (
+              <span className={`${style.color1}`}>모집중</span>
+            ) : (
+              <span className={`${style.color1}`}>모집완료</span>
+            )
+          }
+          
+        </p>
       </div>
       <div className={`${style['card-content']}`}>
         <p>{data.title}</p> 

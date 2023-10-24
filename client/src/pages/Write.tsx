@@ -9,6 +9,8 @@ import SelectBox from '../components/ui/SelectBox';
 import { ButtonSt1 } from '../components/ui/Buttons';
 import { isValidInput, isValidDiscordURL, formatDateToYYYYMMDD } from '../utils';
 import CalendarCustom from '../components/ui/CalendarCustom';
+import { format } from 'path';
+import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 
 const Write = () => {
 
@@ -24,12 +26,13 @@ const Write = () => {
     personnel : '1',
     deadLine : formatDateToYYYYMMDD(formattedDate),
     detailGenre : '',
-    nickName : ''
+    nickName : '',
+    status : 0
   };
   
   const [information, setInformation] = useState(initialInputs)
   const [detailGenreArr, setdetailGenreArr] = useState<string[]>([]) //콤마로 구분된 세부장르 저장하는 State
-  const {title, genre, gameName, url, content, personnel, deadLine, detailGenre} = information;
+  const {title, genre, gameName, url, content, personnel, deadLine, detailGenre, status} = information;
   const {state : {nickName}} = useLocation();
   const navigate = useNavigate();
   const { num } = useParams();
@@ -138,6 +141,12 @@ const Write = () => {
     try {
       exceptionHandler();
 
+      // YYYY-MM-DD 형식의 날짜를 문자열로 표시
+      const formattedDate = today.toISOString().slice(0, 10);
+      if(status === 1 && new Date(formattedDate) < new Date(deadLine)){
+        information.status = 0
+      }
+
       const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/modify/${num}`,information);
       if (response.status === 200) {
         navigate(`/view/${num}`);
@@ -149,7 +158,6 @@ const Write = () => {
     } catch (error) {
       // 오류 처리
       alert(error);
-      //console.error(error)
     }
   }
 

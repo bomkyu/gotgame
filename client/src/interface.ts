@@ -60,7 +60,8 @@ export interface listData {
     url : string,
     personnel : string,
     deadLine : string,
-    date : string 
+    date : string,
+    status : number
     
 }
 

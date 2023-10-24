@@ -1,9 +1,11 @@
 // server/index.js 또는 서버 애플리케이션 진입 파일
+import * as cron from 'node-cron';
 import mysql from 'mysql2';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { stat } from 'fs';
 dotenv.config(); // .env 파일의 환경 변수를 process.env에 등록
 
 const app = express();
@@ -41,7 +43,25 @@ app.get('/api/data', (req: Request, res: Response) => {
 });
 
 //매일 자정에 실행되는 스케줄링 작업
+cron.schedule('0 0 * * *', async () => {
+  //현재날짜
+  const currentDate = new Date();
 
+
+  const updateQuery = `
+    UPDATE tb_posts
+    SET status = 1
+    WHERE STR_TO_DATE(deadLine, '%Y-%m-%d') < ?
+  `;
+
+  connection.query(updateQuery, [currentDate], (err, results) => {
+    if (err) {
+      console.error('Error updating status:', err);
+    } else {
+      console.log('Status updated successfully');
+    }
+  });
+});
 
 //회원가입시, 중복되는 닉네임 검사를 위한 닉네임 가져오기
 app.get('/api/register', async (req: Request, res:Response) => {
@@ -150,15 +170,15 @@ app.post('/write', async (req: Request, res: Response) => {
 
 app.put('/modify/:num', (req:Request, res:Response)=>{
   const num = req.params.num;
-  const { title, content, gameName, genre, detailGenre, url, personnel, deadLine} = req.body;
-  
+  const { title, content, gameName, genre, detailGenre, url, personnel, deadLine, status} = req.body;
+ 
   const updateQuerry = `
   UPDATE tb_posts
-    SET title = ?, content = ?, gameName = ?, genre = ?, detailGenre = ?, url = ?,personnel = ?, deadLine = ?
+    SET title = ?, content = ?, gameName = ?, genre = ?, detailGenre = ?, url = ?,personnel = ?, deadLine = ?, status = ?
   WHERE 
   num = ?`;
 
-  connection.query(updateQuerry, [ title, content, gameName, genre, detailGenre, url, personnel, deadLine, num], (error, result)=>{
+  connection.query(updateQuerry, [ title, content, gameName, genre, detailGenre, url, personnel, deadLine, status, num], (error, result)=>{
     if (error) {
       res.status(500).json({ message: '데이터베이스 업데이트 오류' });
     } else {

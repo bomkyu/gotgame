@@ -36,8 +36,7 @@ const View = () => {
         return <div className='inner'>데이터가 없음</div>;
     }
 
-    const { writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine, date } = getData[0];
-    const sessionUser = getUserInfo();
+    const { writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine, date, status } = getData[0];
 
     const onSelectOption = async (option : any) => {
       switch (option) {
@@ -136,7 +135,16 @@ const View = () => {
               <li>
                 <dl>
                   <dt>디스코드</dt>
-                  <dd><a href={url} target='_blank'>{url}</a></dd>
+                  <dd>
+                    {
+                      status === 0 ? (
+                        <a href={url} target='_blank'>{url}</a>
+                      ) : (
+                        <>모집이 완료되었어요.</>
+                      )
+                    }
+                    
+                  </dd>
                 </dl>
               </li>
           </Horizontal_2>

@@ -6,11 +6,12 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { stat } from 'fs';
+import path from 'path';
 dotenv.config(); // .env 파일의 환경 변수를 process.env에 등록
+
 
 const app = express();
 const port = process.env.SERVER_PORT; // .env 파일에서 등록한 환경 변수 사용
-
 
 //mysql 커넥션 시킴
 const connection = mysql.createConnection({
@@ -21,8 +22,13 @@ const connection = mysql.createConnection({
 });
 
 // 미들웨어 등록
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
+
+// 클라이언트 애플리케이션 빌드 폴더를 정적 파일로 제공
+app.use(express.static(path.join(__dirname, '../../client/build')));
+
 
 //카카오 토큰
 app.post('/api/token', (req : Request, res: Response) =>{
@@ -111,9 +117,8 @@ app.post('/api/register', async (req: Request, res: Response) => {
   });
 });
 
-app.get('/main', async(req: Request, res: Response)=> {
+app.get('/api/main', async(req: Request, res: Response)=> {
   const query = 'SELECT * FROM tb_posts ORDER BY date DESC'; 
-
   connection.query(query, (err, results) => {
     if (err) {
       console.error('쿼리부분 에러', err);
@@ -186,6 +191,12 @@ app.put('/modify/:num', (req:Request, res:Response)=>{
     }
   })
 })
+
+// 나머지 라우트 미들웨어와 서버 시작 코드
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
+});
+
 // 서버 시작
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

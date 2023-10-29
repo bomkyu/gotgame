@@ -15,6 +15,7 @@ import { getUserInfo } from './session'
 import { useDispatch } from 'react-redux';
 import { setUserInfo } from './redux/store/userSlice';
 import { useEffect } from 'react';
+import PrivateRoute from './pages/PrivateRoute';
 const App = () => {
 
   const dispatch = useDispatch();
@@ -33,10 +34,12 @@ const App = () => {
       <div className='content-wrap'>
         <Routes>
           <Route path='/' element={<Main/>} />
-          <Route path='/write' element={<Write/>} />
-          <Route path='/modify/:num' element={<Write/>} />
           <Route path='/view/:num' element={<View/>} />
           <Route path='/*' element={<NotFound/>} />
+          <Route element={<PrivateRoute/>}>
+            <Route path='/write' element={<Write/>} />
+            <Route path='/modify/:num' element={<Write/>} />
+          </Route>
         </Routes>
       </div>
       <Modal/>

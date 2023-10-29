@@ -19,7 +19,7 @@ const Header = () => {
   return (
     <header>
       <div className='inner'>
-          <p className='logo'>GOATGAM</p>
+          <p className='logo' onClick={()=>navigate('/')}>GOATGAM</p>
           <div className='header-util'>
               {
               !isLoggedIn ? <p onClick={()=>openModal('login')}>로그인</p>

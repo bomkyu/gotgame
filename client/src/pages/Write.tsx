@@ -11,11 +11,11 @@ import { isValidInput, isValidDiscordURL, formatDateToYYYYMMDD } from '../utils'
 import CalendarCustom from '../components/ui/CalendarCustom';
 import { format } from 'path';
 import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
+import moment from 'moment';
 
 const Write = () => {
 
   const today = new Date(); 
-  const formattedDate = today.toLocaleDateString();
 
   const initialInputs = {
     title: '',
@@ -24,7 +24,7 @@ const Write = () => {
     url: '',
     content:'',
     personnel : '1',
-    deadLine : formatDateToYYYYMMDD(formattedDate),
+    deadLine : moment(new Date()).format("YYYY-MM-DD"),
     detailGenre : '',
     nickName : '',
     status : 0

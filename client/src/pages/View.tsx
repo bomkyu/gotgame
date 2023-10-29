@@ -10,6 +10,7 @@ import DropDown from '../components/ui/DropDown';
 import { getUserInfo } from '../session';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/rootReducer';
+import moment from 'moment';
 
 const View = () => {
     const { num } = useParams();
@@ -84,7 +85,7 @@ const View = () => {
               </h2>
               <ul className={style['write-info']}>
                 <li>{writer}</li>
-                <li>{formatDateToYYYYMMDD(date)}</li>
+                <li>{moment(date).format('YYYY-MM-DD')}</li>
               </ul>
               
           </div>

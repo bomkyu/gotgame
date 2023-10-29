@@ -15,8 +15,8 @@ import moment from 'moment';
 
 const Write = () => {
 
-  const today = new Date(); 
-
+  const today = new Date();
+  
   const initialInputs = {
     title: '',
     genre: '',

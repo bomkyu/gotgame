@@ -26,10 +26,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-// 클라이언트 애플리케이션 빌드 폴더를 정적 파일로 제공
-app.use(express.static(path.join(__dirname, '../../client/build')));
-
-
 //카카오 토큰
 app.post('/api/token', (req : Request, res: Response) =>{
   //console.log(req.body)
@@ -191,11 +187,6 @@ app.put('/modify/:num', (req:Request, res:Response)=>{
     }
   })
 })
-
-// 나머지 라우트 미들웨어와 서버 시작 코드
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
-});
 
 // 서버 시작
 app.listen(port, () => {

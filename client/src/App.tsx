@@ -17,7 +17,7 @@ import { setUserInfo } from './redux/store/userSlice';
 import { useEffect } from 'react';
 import PrivateRoute from './pages/PrivateRoute';
 const App = () => {
-
+  let location = useLocation();
   const dispatch = useDispatch();
   //redux store에 저장된 userInfo가 새로고침했을때 지워졌을경우 다시 dispatch함
   useEffect(()=>{
@@ -35,15 +35,16 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Main/>} />
           <Route path='/view/:num' element={<View/>} />
-          <Route path='/*' element={<NotFound/>} />
           <Route element={<PrivateRoute/>}>
             <Route path='/write' element={<Write/>} />
             <Route path='/modify/:num' element={<Write/>} />
           </Route>
+          <Route path='/*' element={<NotFound/>} />
         </Routes>
       </div>
       <Modal/>
-      <Footer/>
+      {location.pathname == '/' && <Footer/>}
+      
     </>
   );
 }

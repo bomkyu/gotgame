@@ -51,7 +51,9 @@ footer .footer-box .footer-copy { font-size: 14px; color: var(--color-white); }
 .text-area {display: block; width: 100%; min-height: 300px; border:1px solid var(--color-gray);}
 
 /*tag*/
-.tag-wrap { display: flex; margin-top: 10px; }
+.tag-wrap { display: flex; margin-top: 10px; white-space: nowrap; overflow-x: auto; }
+.tag-wrap::-webkit-scrollbar {display: none; }
+.tag-wrap { -ms-overflow-style: none; scrollbar-width: none; }
 .tag-wrap > li { padding: 5px 10px; background-color: var(--color-gray); font-size: 14px; font-weight: bold; }
 .tag-wrap > li:not(:last-child) { margin-right: 10px; }
 

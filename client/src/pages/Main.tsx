@@ -26,6 +26,7 @@ import { escapeRegExp } from '../utils';
 import { setTab, setCurrentPage, setSearchInputValue, } from '../redux/store/mainSlice';
 import { setUserInfo } from '../redux/store/userSlice';
 import { RootState } from '../redux/rootReducer';
+import Nodata from '../components/layout/Nodata';
 
 const Main = () => {
   // Redux 상태 및 dispatch
@@ -174,9 +175,13 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
     const endIndex = startIndex + itemsPerPage;
     const currentData = dataList.slice(startIndex, endIndex);
 
-    return currentData.map((data) => (
-      <Card key={data.num} onClick={() => navigate(`/view/${data.num}`)} data={data} />
-    ));
+    return currentData.length === 0 ? (
+      <Nodata/>
+    ) : (
+      currentData.map((data) => (
+        <Card key={data.num} onClick={() => navigate(`/view/${data.num}`)} data={data} />
+      ))
+    );
   };
 
    //----------------------------- //renderCards -----------------------------
@@ -200,7 +205,7 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
               searchData.length > 0 ? (
                 renderCards(searchData)
               ) : (
-                <p>데이터가 없소용</p>
+                <p>NODATA</p>
               )
             ) : selectedTab !== 'ALL' ? (
               renderCards(filterData(getData, '', selectedTab))

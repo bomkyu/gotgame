@@ -13,3 +13,14 @@
 .content { margin-top: 40px; padding-top: 40px; font-size: 20px; font-size: 20px; border-top: 1px solid var(--color-gray); white-space: pre; }
 
 .tag-st { margin-top: 0; }
+
+@media all and (max-width:768px) {
+    .title { font-size: 20px; }
+    .write-info > li { font-size: 16px; }
+    .view-list dl > dt,
+    .view-list dl > dd { font-size: 14px; }
+    .view-list dl > dd > a { font-size: 14px; }
+    .view-list dl > dt { width: 50px; }
+    .view-list dl > dd { width: calc(100% - 50px); }
+    .content { font-size: 16px; }
+}

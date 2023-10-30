@@ -19,7 +19,10 @@ const Header = () => {
   return (
     <header>
       <div className='inner'>
-          <p className='logo' onClick={()=>navigate('/')}>GOATGAM</p>
+          <div className='logo flx aic' onClick={()=>navigate('/')}> 
+            <img src="../images/ic_pageLogo_line_color.png" alt="" />
+            <p>GOATGAM</p>
+          </div>
           <div className='header-util'>
               {
               !isLoggedIn ? <p onClick={()=>openModal('login')}>로그인</p>

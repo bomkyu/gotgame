@@ -202,11 +202,7 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
           <InputSearch onChange={searchOnChange} value={searchInputValue} />
           <Horizontal_4>
             {searchInputValue !== '' ? (
-              searchData.length > 0 ? (
-                renderCards(searchData)
-              ) : (
-                <p>NODATA</p>
-              )
+              renderCards(searchData)
             ) : selectedTab !== 'ALL' ? (
               renderCards(filterData(getData, '', selectedTab))
             ) : (

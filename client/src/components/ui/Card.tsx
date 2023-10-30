@@ -21,7 +21,7 @@ const Card : React.FC<CardProps> = ({onClick, data}) => {
         </p>
       </div>
       <div className={`${style['card-content']}`}>
-        <p>{data.title}</p> 
+        <p className='ellipsis'>{data.title}</p> 
         
         <ul className={`tag-wrap ${style['tag-st']}`}>
           {data.detailGenre.split(',').map((params)=>(

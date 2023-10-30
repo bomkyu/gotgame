@@ -162,48 +162,50 @@ const Write = () => {
   }
 
   return (
-    <div className='inner'>
-      <section>
-        <Title title="1. 모집정보 및 디스코드 URL을 입력해 주세요."/>
-        <Horizontal_2>
-          <li><SelectBox title='장르' options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']} onSelectOption={SelectedHandler} value={genre}/></li>
-          <li>
-            <Input name="detailGenre" title="세부장르" value={detailGenre} onChange={onChange}/>
-            {
-              detailGenreArr.length !== 0 &&
-              <ul className='tag-wrap'>
-                {detailGenreArr.map((param)=>{
-                  return(
-                    <li>{param}</li>
-                  );
-                })
+    <div className='content-inner'>
+      <div className='inner'>
+        <section>
+          <Title title="1. 모집정보 및 디스코드 URL을 입력해 주세요."/>
+          <Horizontal_2>
+            <li><SelectBox title='장르' options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']} onSelectOption={SelectedHandler} value={genre}/></li>
+            <li>
+              <Input name="detailGenre" title="세부장르" value={detailGenre} onChange={onChange}/>
+              {
+                detailGenreArr.length !== 0 &&
+                <ul className='tag-wrap'>
+                  {detailGenreArr.map((param)=>{
+                    return(
+                      <li>{param}</li>
+                    );
+                  })
+                }
+                </ul>
+                
               }
-              </ul>
-              
-            }
-          </li>
-          <li><Input name="gameName" title="게임이름" value={gameName} onChange={onChange}/></li>
-          <li><Input name="url" title="디스코드 URL" value={url} onChange={onChange}/></li>
-          <li><Input name="personnel" title="인원" value={personnel} onChange={onChange}/></li>
-          <li>
-            <CalendarCustom title="마감 날짜" onchange={CalendarChange} value={deadLine}/>
-          </li>
-        </Horizontal_2>
-      </section>
-      <section>
-        <Title title="2. 간략한 정보를 설명해 주세요."/>
-        <Input name="title" title="제목" value={title} onChange={onChange}/>
-        <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
+            </li>
+            <li><Input name="gameName" title="게임이름" value={gameName} onChange={onChange}/></li>
+            <li><Input name="url" title="디스코드 URL" value={url} onChange={onChange}/></li>
+            <li><Input name="personnel" title="인원" value={personnel} onChange={onChange}/></li>
+            <li>
+              <CalendarCustom title="마감 날짜" onchange={CalendarChange} value={deadLine}/>
+            </li>
+          </Horizontal_2>
+        </section>
+        <section>
+          <Title title="2. 간략한 정보를 설명해 주세요."/>
+          <Input name="title" title="제목" value={title} onChange={onChange}/>
+          <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
 
-        <div className='flx jsc'>
-          {
-            num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
-            :
-            <ButtonSt1 txt='등록' onClick={onClickHandler}/>
-          }
-            
-          </div>
-      </section>
+          <div className='flx jsc'>
+            {
+              num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
+              :
+              <ButtonSt1 txt='등록' onClick={onClickHandler}/>
+            }
+              
+            </div>
+        </section>
+      </div>
     </div>
   )
 }

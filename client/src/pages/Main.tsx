@@ -191,23 +191,25 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
           </p>
         </div>
       </div>
-      <Inner>
-        <Tab onClick={tabClickHandler} selected={selectedTab} />
-        <InputSearch onChange={searchOnChange} value={searchInputValue} />
-        <Horizontal_4>
-          {searchInputValue !== '' ? (
-            searchData.length > 0 ? (
-              renderCards(searchData)
+      <div className='content-inner'>
+        <Inner>
+          <Tab onClick={tabClickHandler} selected={selectedTab} />
+          <InputSearch onChange={searchOnChange} value={searchInputValue} />
+          <Horizontal_4>
+            {searchInputValue !== '' ? (
+              searchData.length > 0 ? (
+                renderCards(searchData)
+              ) : (
+                <p>데이터가 없소용</p>
+              )
+            ) : selectedTab !== 'ALL' ? (
+              renderCards(filterData(getData, '', selectedTab))
             ) : (
-              <p>데이터가 없소용</p>
-            )
-          ) : selectedTab !== 'ALL' ? (
-            renderCards(filterData(getData, '', selectedTab))
-          ) : (
-            renderCards(getData)
-          )}
-        </Horizontal_4>
-      </Inner>
+              renderCards(getData)
+            )}
+          </Horizontal_4>
+        </Inner>
+      </div>
       <Paging
         totalPages={totalPages} //전체 페이지
         currentPage={currentPage} //현재 페이지

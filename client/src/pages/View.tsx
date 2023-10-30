@@ -70,6 +70,7 @@ const View = () => {
       navigate('/');
     }
     return (
+      <div className='content-inner'>
         <div className='inner'>
           <div className={style['view-top']}>
               <h2 className={style.title}>
@@ -156,6 +157,7 @@ const View = () => {
             <ButtonSt1 txt="목록" onClick={buttonClickHandler}/>
           </div>
         </div>
+      </div>
     )
 }
 

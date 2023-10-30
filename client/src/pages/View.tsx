@@ -90,66 +90,68 @@ const View = () => {
               </ul>
               
           </div>
-          <Horizontal_2>
-              <li>
+          <div className={style['view-list']}>
+            <Horizontal_2>
+                <li>
+                  <dl>
+                    <dt>게임 이름</dt>
+                    <dd>{gameName}</dd>
+                  </dl>
+                  
+                </li>
+                <li>
+                  <dl>
+                    <dt>게임 장르</dt>
+                    <dd>{genre}</dd>
+                  </dl>
+                  
+                </li>
+                <li>
+                  <dl>
+                    <dt>세부 장르</dt>
+                      <dd>
+                        {
+                          //detailGenre
+                          <ul className={`tag-wrap ${style['tag-st']}`}>
+                            {detailGenre.split(',').map((params)=>(
+                              <li>{params}</li>
+                            ))}
+                          </ul>
+                        }
+                      </dd>
+                  </dl>
+                  
+                </li>
+                <li>
+                  <dl>
+                    <dt>마감 날짜</dt>
+                    <dd>{formatDateToYYYYMMDD(deadLine)}</dd>
+                  </dl>
+                </li>
+                <li>
                 <dl>
-                  <dt>게임 이름</dt>
-                  <dd>{gameName}</dd>
-                </dl>
-                
-              </li>
-              <li>
-                <dl>
-                  <dt>게임 장르</dt>
-                  <dd>{genre}</dd>
-                </dl>
-                
-              </li>
-              <li>
-                <dl>
-                  <dt>세부 장르</dt>
+                    <dt>모집 인원</dt>
+                    <dd>{personnel}</dd>
+                  </dl>
+                  
+                </li>
+                <li>
+                  <dl>
+                    <dt>디스코드</dt>
                     <dd>
                       {
-                        //detailGenre
-                        <ul className={`tag-wrap ${style['tag-st']}`}>
-                          {detailGenre.split(',').map((params)=>(
-                            <li>{params}</li>
-                          ))}
-                        </ul>
+                        status === 0 ? (
+                          <a href={url} target='_blank'>{url}</a>
+                        ) : (
+                          <>모집이 완료되었어요.</>
+                        )
                       }
+                      
                     </dd>
-                </dl>
-                
-              </li>
-              <li>
-                <dl>
-                  <dt>마감 날짜</dt>
-                  <dd>{formatDateToYYYYMMDD(deadLine)}</dd>
-                </dl>
-              </li>
-              <li>
-               <dl>
-                  <dt>모집 인원</dt>
-                  <dd>{personnel}</dd>
-                </dl>
-                
-              </li>
-              <li>
-                <dl>
-                  <dt>디스코드</dt>
-                  <dd>
-                    {
-                      status === 0 ? (
-                        <a href={url} target='_blank'>{url}</a>
-                      ) : (
-                        <>모집이 완료되었어요.</>
-                      )
-                    }
-                    
-                  </dd>
-                </dl>
-              </li>
-          </Horizontal_2>
+                  </dl>
+                </li>
+            </Horizontal_2>
+          </div>
           <div className={style.content}>
             {content}
           </div>

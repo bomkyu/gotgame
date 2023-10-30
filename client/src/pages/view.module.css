@@ -4,11 +4,11 @@
 .write-info > li { position: relative; font-size: 20px; font-weight: bold; }
 .write-info > li:not(:first-child)::after { position: absolute; width: 2px; height: 10px; top: 50%; left: -8px; transform: translateY(-50%); background-color : var(--color-gray); content: ""; }
 
-li { cursor: auto !important; }
-dl { display: flex; font-size: 20px; }
-dl > * { font-size: 20px; font-weight: bold; }
-dl > dt { width: 102px; margin-right: 20px; }
-dl > dd > a { font-size: 20px; font-weight: bold; color: var(--color-1); }
+.view-list li { cursor: auto; }
+.view-list dl { display: flex; font-size: 20px; }
+.view-list dl > * { font-size: 20px; font-weight: bold; }
+.view-list dl > dt { width: 102px; margin-right: 20px; }
+.view-list dl > dd > a { font-size: 20px; font-weight: bold; color: var(--color-1); }
 .content { margin-top: 40px; padding-top: 40px; font-size: 20px; font-size: 20px; border-top: 1px solid var(--color-gray); white-space: pre; }
 
 .tag-st { margin-top: 0; }

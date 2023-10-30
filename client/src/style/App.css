@@ -70,4 +70,8 @@ footer .footer-box .footer-copy { font-size: 14px; color: var(--color-white); }
     .tag-wrap > li { font-size: 12px; }
     header > .inner > .logo > p { display: none; }
     header > .inner > .header-util > * { font-size: 18px; }
+    footer { padding: 20px; }
+    footer .footer-img { margin-right: 0; }
+    footer .footer-box { position: unset; flex-direction: column; transform: unset; }
+    footer .footer-box .footer-txt { margin-top: 30px; text-align: center; }
 }

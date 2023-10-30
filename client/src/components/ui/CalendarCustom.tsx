@@ -29,7 +29,7 @@ const CalendarCustom = ({ onchange , title, value } : CalendarCustomProps) => {
     }, [click])
     return (
     
-    <div className={style['calendar-wrap']} >
+    <div className={style['calendar-wrap']} ref={calendarRef} >
       <div className={style['calendar-info']} onClick={()=>setClick(!click)}>
         <span>{title}</span>
         <p>{value}</p>
@@ -37,7 +37,7 @@ const CalendarCustom = ({ onchange , title, value } : CalendarCustomProps) => {
       </div>
         {
         click &&
-          <div ref={calendarRef}>
+          <div>
           <Calendar
             minDate={moment().toDate()}
             onChange={onchange}

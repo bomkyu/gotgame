@@ -68,5 +68,4 @@ footer .footer-box .footer-copy { font-size: 14px; color: var(--color-white); }
 
 @media all and (max-width:768px) {
     .tag-wrap > li { font-size: 12px; }
-    header > .inner > .logo > p { display: none; }
 }

@@ -5,7 +5,7 @@
 .write-info > li:not(:first-child)::after { position: absolute; width: 2px; height: 10px; top: 50%; left: -8px; transform: translateY(-50%); background-color : var(--color-gray); content: ""; }
 
 .view-list li { cursor: auto; }
-.view-list dl { display: flex; font-size: 20px; }
+.view-list dl { display: flex; font-size: 20px; align-items: center; }
 .view-list dl > * { font-size: 20px; font-weight: bold; }
 .view-list dl > dt { width: 102px; margin-right: 20px; }
 .view-list dl > dd { width: calc(100% - 122px); }
@@ -15,12 +15,13 @@
 .tag-st { margin-top: 0; }
 
 @media all and (max-width:768px) {
-    .title { font-size: 20px; }
-    .write-info > li { font-size: 16px; }
+    .view-top { margin-bottom: 25px; padding-top: 30px; }
+    .title { margin-bottom: 10px; font-size: 20px; }
+    .write-info > li { font-size: 14px; }
     .view-list dl > dt,
     .view-list dl > dd { font-size: 14px; }
     .view-list dl > dd > a { font-size: 14px; }
     .view-list dl > dt { width: 50px; }
-    .view-list dl > dd { width: calc(100% - 50px); }
-    .content { font-size: 16px; }
+    .view-list dl > dd { width: calc(100% - 70px); }
+    .content { margin-top: 20px; padding-top: 20px; font-size: 16px; }
 }

@@ -6,3 +6,8 @@
 .tab-list > li > b:hover:after { width: 100%; }
 .tab-list > li.active > b { color: #4E4FEB; }
 .tab-list > li.active > b:after {width: 100%;}
+
+@media all and (max-width:768px) {
+.tab-list > li > b {font-size: 20px; }
+    
+}

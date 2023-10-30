@@ -23,19 +23,28 @@ const CalendarCustom = ({ onchange , title, value } : CalendarCustomProps) => {
         document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    useEffect(()=> {
+      console.log(click);
+    }, [click])
     return (
-    <div className={style['calendar-wrap']} onClick={()=>setClick(!click)} ref={calendarRef}>
+    
+    <div className={style['calendar-wrap']} >
+      <div className={style['calendar-info']} onClick={()=>setClick(!click)}>
         <span>{title}</span>
         <p>{value}</p>
         <img src='../images/ic_calendar.png' alt='캘린더 아이콘'/>
+      </div>
         {
         click &&
+          <div ref={calendarRef}>
           <Calendar
             minDate={moment().toDate()}
             onChange={onchange}
             formatDay={(locale, date) => moment(date).format("DD")}
             value={value}
           />
+          </div>
         }
     </div>
   )

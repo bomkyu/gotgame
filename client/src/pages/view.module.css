@@ -18,6 +18,7 @@
     .view-top { margin-bottom: 25px; padding-top: 30px; }
     .title { margin-bottom: 10px; font-size: 20px; }
     .write-info > li { font-size: 14px; }
+    .view-list { padding: 20px; background-color: var(--color-gray-2); }
     .view-list dl > dt,
     .view-list dl > dd { font-size: 14px; }
     .view-list dl > dd > a { font-size: 14px; }

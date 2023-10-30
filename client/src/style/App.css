@@ -15,7 +15,7 @@
 .aic { align-items: center; }
 .mg-t40 { margin-top: 40px; }
 /* header */
-header {width: 100%; height: 60px; padding: 0 20px; border-bottom: 1px solid #CCC; }
+header {width: 100%; height: 60px; padding: 0 10px; border-bottom: 1px solid #CCC; }
 header > .inner { height: 100%; display: flex; justify-content: space-between; align-items: center; }
 
 header > .inner > .logo > img { max-width: 60px; }

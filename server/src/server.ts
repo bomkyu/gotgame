@@ -45,25 +45,25 @@ app.get('/api/data', (req: Request, res: Response) => {
 });
 
 //매일 자정에 실행되는 스케줄링 작업
-// cron.schedule('0 0 * * *', async () => {
-//   //현재날짜
-//   const currentDate = new Date();
+cron.schedule('0 0 * * *', async () => {
+  //현재날짜
+  const currentDate = new Date();
 
 
-//   const updateQuery = `
-//     UPDATE tb_posts
-//     SET status = 1
-//     WHERE STR_TO_DATE(deadLine, '%Y-%m-%d') < ?
-//   `;
+  const updateQuery = `
+    UPDATE tb_posts
+    SET status = 1
+    WHERE STR_TO_DATE(deadLine, '%Y-%m-%d') < ?
+  `;
 
-//   connection.query(updateQuery, [currentDate], (err, results) => {
-//     if (err) {
-//       console.error('Error updating status:', err);
-//     } else {
-//       console.log('Status updated successfully');
-//     }
-//   });
-// });
+  connection.query(updateQuery, [currentDate], (err, results) => {
+    if (err) {
+      console.error('Error updating status:', err);
+    } else {
+      console.log('Status updated successfully');
+    }
+  });
+});
 
 //회원가입시, 중복되는 닉네임 검사를 위한 닉네임 가져오기
 app.get('/api/register', async (req: Request, res:Response) => {

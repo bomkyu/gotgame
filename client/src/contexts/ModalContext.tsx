@@ -30,7 +30,7 @@ export const ModalProvider = ({ children } : { children : ReactNode}) => {
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (context === undefined) {
-    throw new Error('에러에용');
+    throw new Error('에러');
   }
   return context;
 };

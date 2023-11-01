@@ -68,11 +68,23 @@ footer .footer-box .footer-copy { font-size: 14px; color: var(--color-white); }
 .ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 @media all and (max-width:768px) {
+    /* tag */
     .tag-wrap > li { font-size: 12px; }
+
+    /* header */
     header > .inner > .logo > p { display: none; }
     header > .inner > .header-util > * { font-size: 18px; }
+
+    /* footer */
     footer { padding: 20px; }
     footer .footer-img { margin-right: 0; }
     footer .footer-box { position: unset; flex-direction: column; transform: unset; }
     footer .footer-box .footer-txt { margin-top: 30px; text-align: center; }
+
+    /* btn-wrap */
+    .btn-wrap { position: fixed; width: 100%; padding: 10px; left: 0; bottom: 0; background-color: var(--color-gray-2); }
+    .btn-wrap * { width: 100%; text-align: center; }
+
+    /* mb-inner 버튼 들어간 페이지에 넣어야함*/
+    .mb-inner {padding-bottom: 70px;}
 }

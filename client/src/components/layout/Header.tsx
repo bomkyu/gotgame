@@ -21,7 +21,7 @@ const Header = () => {
       <div className='inner'>
           <div className='logo flx aic' onClick={()=>navigate('/')}> 
             <img src="../images/ic_pageLogo_line_bold_color.png" alt="로고 이미지" />
-            <p>GOATGAM</p>
+            <p>GOATGAME</p>
           </div>
           <div className='header-util'>
               {

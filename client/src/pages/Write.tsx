@@ -9,8 +9,6 @@ import SelectBox from '../components/ui/SelectBox';
 import { ButtonSt1 } from '../components/ui/Buttons';
 import { isValidInput, isValidDiscordURL, formatDateToYYYYMMDD } from '../utils';
 import CalendarCustom from '../components/ui/CalendarCustom';
-import { format } from 'path';
-import { formatDate } from 'react-calendar/dist/cjs/shared/dateFormatter';
 import moment from 'moment';
 
 const Write = () => {
@@ -162,7 +160,7 @@ const Write = () => {
   }
 
   return (
-    <div className='content-inner'>
+    <div className='content-inner mb-inner'>
       <div className='inner'>
         <section>
           <Title title="1. 모집정보 및 디스코드 URL을 입력해 주세요."/>
@@ -195,15 +193,16 @@ const Write = () => {
           <Title title="2. 간략한 정보를 설명해 주세요."/>
           <Input name="title" title="제목" value={title} onChange={onChange}/>
           <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
-
-          <div className='flx jsc'>
-            {
-              num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
-              :
-              <ButtonSt1 txt='등록' onClick={onClickHandler}/>
-            }
-              
+          
+          <div className='btn-wrap'>
+            <div className='flx jsc'>
+              {
+                num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
+                :
+                <ButtonSt1 txt='등록' onClick={onClickHandler}/>
+              }
             </div>
+          </div>
         </section>
       </div>
     </div>

@@ -70,7 +70,7 @@ const View = () => {
       navigate('/');
     }
     return (
-      <div className='content-inner'>
+      <div className='content-inner mb-inner'>
         <div className='inner'>
           <div className={style['view-top']}>
               <h2 className={style.title}>
@@ -155,8 +155,10 @@ const View = () => {
           <div className={style.content}>
             {content}
           </div>
-          <div className='flx jsc mg-t40'>
-            <ButtonSt1 txt="목록" onClick={buttonClickHandler}/>
+          <div className='btn-wrap'>
+            <div className='flx jsc'>
+              <ButtonSt1 txt="목록" onClick={buttonClickHandler}/>
+            </div>
           </div>
         </div>
       </div>

@@ -1,46 +1,21 @@
-# Getting Started with Create React App
+## 소개
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+같이 게임할 사람을 모집하는 홈페이지 입니다!
 
-In the project directory, you can run:
+한번쯤 만들어보고 싶었던 기획이였는데,
 
-### `yarn start`
+https://holaworld.io/ 에 영감을 받아 제작해봤습니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**홈페이지 주소 :** [http://tjqjarb1.dothome.co.kr/](http://tjqjarb1.dothome.co.kr/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **기간 : 2023-08 ~ 2023-10**
+- **인원 : 서범규**
+- **FRONT-END : React.js, TypeScript, React-router-dom, react-calendar, axios, redux toolkit**
+- **BACK-END : MySQL, Node.js, AWS(E2C, RDS), googleOauth, kakaoOauth**
+<br>
+<br>
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 주요기능
+**로그인 & 회원가입 : KAKAO, Google Oauth로 REST API로 구현**
+**CURD : 글작성, View페이지, 수정페이지, 삭제까지 REST API를 통해 구현**

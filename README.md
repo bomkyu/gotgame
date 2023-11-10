@@ -7,7 +7,7 @@
 
 https://holaworld.io/ 에 영감을 받아 제작해봤습니다.
 
-**홈페이지 주소 :** [http://tjqjarb1.dothome.co.kr/](http://tjqjarb1.dothome.co.kr/)
+**홈페이지 주소 :** [http://goatgame.co.kr/](http://goatgame.co.kr/)
 
 - **기간 : 2023-08 ~ 2023-10**
 - **인원 : 서범규**

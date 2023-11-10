@@ -14,7 +14,6 @@ https://holaworld.io/ 에 영감을 받아 제작해봤습니다.
 - **FRONT-END : React.js, TypeScript, React-router-dom, react-calendar, axios, redux toolkit**
 - **BACK-END : MySQL, Node.js, AWS(E2C, RDS), googleOauth, kakaoOauth**
 <br>
-<br>
 
 ## 주요기능
 **로그인 & 회원가입 : KAKAO, Google Oauth로 REST API로 구현**

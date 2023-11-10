@@ -155,7 +155,7 @@ const View = () => {
           <div className={style.content}>
             {content}
           </div>
-          <div className='btn-wrap'>
+          <div className='btn-wrap mg-t40'>
             <div className='flx jsc'>
               <ButtonSt1 txt="목록" onClick={buttonClickHandler}/>
             </div>

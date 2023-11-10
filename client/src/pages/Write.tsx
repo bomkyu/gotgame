@@ -194,7 +194,7 @@ const Write = () => {
           <Input name="title" title="제목" value={title} onChange={onChange}/>
           <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
           
-          <div className='btn-wrap'>
+          <div className='btn-wrap mg-t40'>
             <div className='flx jsc'>
               {
                 num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>

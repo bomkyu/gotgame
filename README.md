@@ -1,16 +1,10 @@
 # GOATGAME
 
-생성일: 2023년 10월 31일 오후 5:33
-
-![Untitled](GOATGAME%205900245b032548c9aeb1c8e84ec1ca3f/Untitled.png)
-
 **홈페이지 주소 : [**http://goatgame.co.kr/](http://goatgame.co.kr/)
 
 **깃허브 주소 :** [https://github.com/bomkyu/gotgame](https://github.com/bomkyu/gotgame)
 
 ## 소개
-
----
 
 같이 게임할 사람을 모집하는 홈페이지 입니다!
 
@@ -22,19 +16,14 @@
 - **인원 : 1명**
 - **FRONT-END** : React.js, TypeScript, React-router-dom, react-calendar, axios, redux toolkit
 - **BACK-END** : MySQL, Node.js, AWS(E2C, RDS), googleOauth, kakaoOauth
-- **TOOL** : GIT
 
 ## 구현기능
-
----
 
 **로그인 & 회원가입 : KAKAO, Google Oauth로 REST API로 구현**
 
 **CURD : 글작성, View페이지, 수정페이지, 삭제까지 REST API를 통해 구현**
 
 ## 페이지
-
----
 
 - [**로그인 & 회원가입]**
     

@@ -7,73 +7,93 @@ import { Title } from '../components/ui/Title';
 import Input from '../components/ui/Input';
 import SelectBox from '../components/ui/SelectBox';
 import { ButtonSt1 } from '../components/ui/Buttons';
-import { isValidInput, isValidDiscordURL, formatDateToYYYYMMDD } from '../utils';
+import {
+  isValidInput,
+  isValidDiscordURL,
+  formatDateToYYYYMMDD,
+} from '../utils';
 import CalendarCustom from '../components/ui/CalendarCustom';
 import moment from 'moment';
 
 const Write = () => {
-
   const today = new Date();
-  
+
   const initialInputs = {
     title: '',
     genre: '',
     gameName: '',
     url: '',
-    content:'',
-    personnel : '1',
-    deadLine : moment(new Date()).format("YYYY-MM-DD"),
-    detailGenre : '',
-    nickName : '',
-    status : 0
+    content: '',
+    personnel: '1',
+    deadLine: moment(new Date()).format('YYYY-MM-DD'),
+    detailGenre: '',
+    nickName: '',
+    status: 0,
   };
-  
-  const [information, setInformation] = useState(initialInputs)
-  const [detailGenreArr, setdetailGenreArr] = useState<string[]>([]) //콤마로 구분된 세부장르 저장하는 State
-  const {title, genre, gameName, url, content, personnel, deadLine, detailGenre, status} = information;
-  const {state : {nickName}} = useLocation();
+
+  const [information, setInformation] = useState(initialInputs);
+  const [detailGenreArr, setdetailGenreArr] = useState<string[]>([]); //콤마로 구분된 세부장르 저장하는 State
+  const {
+    title,
+    genre,
+    gameName,
+    url,
+    content,
+    personnel,
+    deadLine,
+    detailGenre,
+    status,
+  } = information;
+  const {
+    state: { nickName },
+  } = useLocation();
   const navigate = useNavigate();
   const { num } = useParams();
 
   // 캘린더 변경 핸들러
-  const CalendarChange = (value: any, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const CalendarChange = (
+    value: any,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     setInformation({
       ...information,
-      deadLine : formatDateToYYYYMMDD(value)
-    })
+      deadLine: formatDateToYYYYMMDD(value),
+    });
   };
 
   //input onChange 부분
-  const onChange = (e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    
-    if(name === 'detailGenre'){
-      const arr = value.split(",");
 
-      if(arr.length !== 4) {
-        setdetailGenreArr(arr)
-      }else{
+    if (name === 'detailGenre') {
+      const arr = value.split(',');
+
+      if (arr.length !== 4) {
+        setdetailGenreArr(arr);
+      } else {
         alert('태그는 최대 3개까지 가능합니다.');
       }
     }
 
     setInformation({
       ...information,
-      [name] : value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   //수정 상태로 들어왔을때 값들을 받아와서 information state에 집어넣음.
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-      if(num){
-        try{
-          const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/view/${num}`);
+      if (num) {
+        try {
+          const response = await axios.get(`/view/${num}`);
           if (response.data && response.data.length > 0) {
             setInformation(response.data[0]);
             const detail = response.data[0].detailGenre;
-            const detail_arr = detail.split(",");
-            
+            const detail_arr = detail.split(',');
+
             setdetailGenreArr(detail_arr);
           } else {
             alert('게시물을 찾을 수 없습니다.');
@@ -82,20 +102,20 @@ const Write = () => {
           alert('데이터 검색 중 오류가 발생했습니다.');
         }
       }
-    }
+    };
     fetchData();
-  }, [num])
+  }, [num]);
 
   //selectBoxHandler
-  const SelectedHandler = (option : string) => {
-    setInformation({...information, genre : option});
-  }
+  const SelectedHandler = (option: string) => {
+    setInformation({ ...information, genre: option });
+  };
 
   const exceptionHandler = () => {
     if (!isValidInput(genre)) {
       throw new Error('장르를 선택해 주세요.');
     }
-  
+
     if (detailGenreArr.length === 0) {
       throw new Error('세부장르는 최소 하나 입력하셔야 합니다.');
     }
@@ -111,19 +131,21 @@ const Write = () => {
     if (!isValidInput(title)) {
       throw new Error('제목은 3글자 이상이어야 합니다.');
     }
-    
-    if(!isValidInput(content)) {
+
+    if (!isValidInput(content)) {
       throw new Error('정보를 3글자 이상 입력해 주세요.');
     }
-    
-  }
+  };
 
   //등록 핸들러
   const onClickHandler = async () => {
     try {
       exceptionHandler();
 
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/write`,{...information, nickName : nickName});
+      const response = await axios.post(`/write`, {
+        ...information,
+        nickName: nickName,
+      });
       if (response.status === 200) {
         navigate('/');
       } else {
@@ -132,7 +154,7 @@ const Write = () => {
     } catch (error) {
       alert(error);
     }
-  }
+  };
 
   //수정 핸들러
   const modifyHandler = async () => {
@@ -141,72 +163,107 @@ const Write = () => {
 
       // YYYY-MM-DD 형식의 날짜를 문자열로 표시
       const formattedDate = today.toISOString().slice(0, 10);
-      if(status === 1 && new Date(formattedDate) < new Date(deadLine)){
-        information.status = 0
+      if (status === 1 && new Date(formattedDate) < new Date(deadLine)) {
+        information.status = 0;
       }
 
-      const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/modify/${num}`,information);
+      const response = await axios.put(`/modify/${num}`, information);
       if (response.status === 200) {
         navigate(`/view/${num}`);
-
       } else {
         alert('수정에 실패했습니다.');
-
       }
     } catch (error) {
       // 오류 처리
       alert(error);
     }
-  }
+  };
 
   return (
     <div className='content-inner mb-inner'>
       <div className='inner'>
         <section>
-          <Title title="1. 모집정보 및 디스코드 URL을 입력해 주세요."/>
+          <Title title='1. 모집정보 및 디스코드 URL을 입력해 주세요.' />
           <Horizontal_2>
-            <li><SelectBox title='장르' options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']} onSelectOption={SelectedHandler} value={genre}/></li>
             <li>
-              <Input name="detailGenre" title="세부장르" value={detailGenre} onChange={onChange}/>
-              {
-                detailGenreArr.length !== 0 &&
-                <ul className='tag-wrap'>
-                  {detailGenreArr.map((param)=>{
-                    return(
-                      <li>{param}</li>
-                    );
-                  })
-                }
-                </ul>
-                
-              }
+              <SelectBox
+                title='장르'
+                options={['FPS', 'TPS', 'AOS', 'RPG', 'MOBILE']}
+                onSelectOption={SelectedHandler}
+                value={genre}
+              />
             </li>
-            <li><Input name="gameName" title="게임이름" value={gameName} onChange={onChange}/></li>
-            <li><Input name="url" title="디스코드 URL" value={url} onChange={onChange}/></li>
-            <li><Input name="personnel" title="인원" value={personnel} onChange={onChange}/></li>
             <li>
-              <CalendarCustom title="마감 날짜" onchange={CalendarChange} value={deadLine}/>
+              <Input
+                name='detailGenre'
+                title='세부장르'
+                value={detailGenre}
+                onChange={onChange}
+              />
+              {detailGenreArr.length !== 0 && (
+                <ul className='tag-wrap'>
+                  {detailGenreArr.map((param) => {
+                    return <li>{param}</li>;
+                  })}
+                </ul>
+              )}
+            </li>
+            <li>
+              <Input
+                name='gameName'
+                title='게임이름'
+                value={gameName}
+                onChange={onChange}
+              />
+            </li>
+            <li>
+              <Input
+                name='url'
+                title='디스코드 URL'
+                value={url}
+                onChange={onChange}
+              />
+            </li>
+            <li>
+              <Input
+                name='personnel'
+                title='인원'
+                value={personnel}
+                onChange={onChange}
+              />
+            </li>
+            <li>
+              <CalendarCustom
+                title='마감 날짜'
+                onchange={CalendarChange}
+                value={deadLine}
+              />
             </li>
           </Horizontal_2>
         </section>
         <section>
-          <Title title="2. 간략한 정보를 설명해 주세요."/>
-          <Input name="title" title="제목" value={title} onChange={onChange}/>
-          <textarea className='text-area mg-t20' name='content' onChange={onChange} value={content}/>
-          
+          <Title title='2. 간략한 정보를 설명해 주세요.' />
+          <Input name='title' title='제목' value={title} onChange={onChange} />
+          <textarea
+            className='text-area mg-t20'
+            name='content'
+            onChange={onChange}
+            value={content}
+          />
+
           <div className='btn-wrap mg-t40'>
             <div className='flx jsc'>
-              {
-                num ? <ButtonSt1 txt='수정' onClick={modifyHandler}/>
-                :
-                <ButtonSt1 txt='등록' onClick={onClickHandler}/>
-              }
+              {num ? (
+                <ButtonSt1 txt='수정' onClick={modifyHandler} />
+              ) : (
+                <ButtonSt1 txt='등록' onClick={onClickHandler} />
+              )}
             </div>
           </div>
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Write
+export default Write;

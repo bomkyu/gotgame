@@ -23,7 +23,11 @@ import { listData } from '../interface';
 import { escapeRegExp } from '../utils';
 
 // Redux 액션 및 상태
-import { setTab, setCurrentPage, setSearchInputValue, } from '../redux/store/mainSlice';
+import {
+  setTab,
+  setCurrentPage,
+  setSearchInputValue,
+} from '../redux/store/mainSlice';
 import { setUserInfo } from '../redux/store/userSlice';
 import { RootState } from '../redux/rootReducer';
 import Nodata from '../components/layout/Nodata';
@@ -33,7 +37,9 @@ const Main = () => {
   const dispatch = useDispatch();
   const selectedTab = useSelector((state: RootState) => state.main.selectedTab); // 선택한 탭 (기본값: ALL)
   const currentPage = useSelector((state: RootState) => state.main.currentPage); // 현재 페이지
-  const searchInputValue = useSelector((state: RootState) => state.main.searchInputValue); // 검색 value
+  const searchInputValue = useSelector(
+    (state: RootState) => state.main.searchInputValue
+  ); // 검색 value
 
   // 데이터 저장
   const { openModal, setModalData } = useModal();
@@ -56,29 +62,29 @@ const Main = () => {
 
   // 콜백이 되는 함수
   const LoginInfoRequestCallBack = (data: object) => {
+    console.log('ssssssssss', data);
     // 회원정보 검색
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/api/register`, data)
-      .then((response) => {
-        switch (response.data.status) {
-          case 'register':
-            openModal('register');
-            setModalData(data);
-            break;
-          case 'login':
-            dispatch(setUserInfo(response.data.userInfo)) //redux에 로그인정보 저장
-            setsessionUserInfo(response.data.userInfo); //session에 로그인정보 저장
-            navigate('/');
-            break;
-          default:
-            break;
-        }
-      });
+    axios.post(`/api/register`, data).then((response) => {
+      switch (response.data.status) {
+        case 'register':
+          openModal('register');
+          setModalData(data);
+          break;
+        case 'login':
+          dispatch(setUserInfo(response.data.userInfo)); //redux에 로그인정보 저장
+          setsessionUserInfo(response.data.userInfo); //session에 로그인정보 저장
+          navigate('/');
+          break;
+        default:
+          break;
+      }
+    });
   };
 
   // 데이터 로드 함수
   const fetchAll = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/main`);
+      const response = await axios.get(`/api/main`);
       setGetData(response.data);
     } catch (error) {
       console.log('데이터를 가져오는 중 오류 발생:', error);
@@ -86,19 +92,25 @@ const Main = () => {
   };
 
   // 데이터 필터링 함수
-const filterData = (data: listData[], searchInputValue: string, selectedTab: string) => {
-  if (selectedTab !== 'ALL') {
-    data = data.filter((param) => param.genre === selectedTab);
-  }
+  const filterData = (
+    data: listData[],
+    searchInputValue: string,
+    selectedTab: string
+  ) => {
+    if (selectedTab !== 'ALL') {
+      data = data.filter((param) => param.genre === selectedTab);
+    }
 
-  if (searchInputValue !== '') {
-    const escapedValue = escapeRegExp(searchInputValue);
-    const regex = new RegExp(escapedValue, 'i');
-    data = data.filter((param) => regex.test(param.title) || regex.test(param.content));
-  }
+    if (searchInputValue !== '') {
+      const escapedValue = escapeRegExp(searchInputValue);
+      const regex = new RegExp(escapedValue, 'i');
+      data = data.filter(
+        (param) => regex.test(param.title) || regex.test(param.content)
+      );
+    }
 
-  return data;
-};
+    return data;
+  };
 
   useEffect(() => {
     tokenRequest();
@@ -111,11 +123,12 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
   }, [getData, searchInputValue, selectedTab]);
 
   useEffect(() => {
-    const totalData = searchInputValue !== ''
-      ? searchData
-      : selectedTab !== 'ALL'
-      ? filterData(getData, '', selectedTab)
-      : getData;
+    const totalData =
+      searchInputValue !== ''
+        ? searchData
+        : selectedTab !== 'ALL'
+        ? filterData(getData, '', selectedTab)
+        : getData;
     const totalItems = totalData.length; // 전체 아이템 수
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
   }, [searchInputValue, selectedTab, getData, searchData]);
@@ -141,15 +154,17 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
 
   //----------------------------- 탭 및 검색 -----------------------------
 
-  const tabClickHandler = (option : string) => {
+  const tabClickHandler = (option: string) => {
     dispatch(setCurrentPage(1));
     dispatch(setTab(option));
-  }
+  };
 
-  const searchOnChange = (e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const searchOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { value } = e.target;
     dispatch(setSearchInputValue(value)); //value값 저장
-  }
+  };
 
   //----------------------------- 페이징 이벤트 처리 -----------------------------
   const goToPreviousPage = () => {
@@ -176,23 +191,28 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
     const currentData = dataList.slice(startIndex, endIndex);
 
     return currentData.length === 0 ? (
-      <Nodata/>
+      <Nodata />
     ) : (
       currentData.map((data) => (
-        <Card key={data.num} onClick={() => navigate(`/view/${data.num}`)} data={data} />
+        <Card
+          key={data.num}
+          onClick={() => navigate(`/view/${data.num}`)}
+          data={data}
+        />
       ))
     );
   };
 
-   //----------------------------- //renderCards -----------------------------
-  
+  //----------------------------- //renderCards -----------------------------
 
   return (
     <>
-      <div className="visual-wrap">
-        <div className="inner">
-          <p className="visual-txt">
-            같이 게임할 사람을 찾으신다구요?<br />그럼 <b>'같겜'</b>과 함께해요!
+      <div className='visual-wrap'>
+        <div className='inner'>
+          <p className='visual-txt'>
+            같이 게임할 사람을 찾으신다구요?
+            <br />
+            그럼 <b>'같겜'</b>과 함께해요!
           </p>
         </div>
       </div>
@@ -201,13 +221,11 @@ const filterData = (data: listData[], searchInputValue: string, selectedTab: str
           <Tab onClick={tabClickHandler} selected={selectedTab} />
           <InputSearch onChange={searchOnChange} value={searchInputValue} />
           <Horizontal_4>
-            {searchInputValue !== '' ? (
-              renderCards(searchData)
-            ) : selectedTab !== 'ALL' ? (
-              renderCards(filterData(getData, '', selectedTab))
-            ) : (
-              renderCards(getData)
-            )}
+            {searchInputValue !== ''
+              ? renderCards(searchData)
+              : selectedTab !== 'ALL'
+              ? renderCards(filterData(getData, '', selectedTab))
+              : renderCards(getData)}
           </Horizontal_4>
         </Inner>
       </div>

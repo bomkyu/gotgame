@@ -42,17 +42,23 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config(); // .env 파일의 환경 변수를 process.env에 등록
 const app = (0, express_1.default)();
-const port = process.env.SERVER_PORT; // .env 파일에서 등록한 환경 변수 사용
+const port = 3000; // .env 파일에서 등록한 환경 변수 사용
 //mysql 커넥션 시킴
 const connection = mysql2_1.default.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    connectTimeout: 28800000, // 8시간
 });
 // 미들웨어 등록
+app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.use((0, cors_1.default)());
 //카카오 토큰
@@ -90,6 +96,28 @@ cron.schedule('0 0 * * *', () => __awaiter(void 0, void 0, void 0, function* () 
         }
     });
 }));
+// 8시간마다 실행되는 스케줄링 작업
+cron.schedule('0 */8 * * *', () => __awaiter(void 0, void 0, void 0, function* () {
+    connection.query('SELECT 1', (err, results) => {
+        if (err) {
+            console.error('Error executing keep-alive query:', err);
+        }
+        else {
+            console.log('Keep-alive query executed successfully');
+        }
+    });
+}));
+// 5분마다 keep-alive 쿼리 실행
+cron.schedule('*/5 * * * *', () => __awaiter(void 0, void 0, void 0, function* () {
+    connection.query('SELECT 1', (err, results) => {
+        if (err) {
+            console.error('Error executing keep-alive query:', err);
+        }
+        else {
+            console.log('Keep-alive query executed successfully');
+        }
+    });
+}));
 //회원가입시, 중복되는 닉네임 검사를 위한 닉네임 가져오기
 app.get('/api/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const nickName = req.query.nickName;
@@ -104,7 +132,7 @@ app.get('/api/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
         }
     });
 }));
-// 인증정보 유효성 검사 
+// 인증정보 유효성 검사
 app.post('/api/register', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = `SELECT id, nickName, platform FROM tb_user WHERE id = '${req.body.id}'`;
     connection.query(query, (err, results) => {
@@ -128,7 +156,9 @@ app.post('/api/register', (req, res) => __awaiter(void 0, void 0, void 0, functi
                     connection.query(insertQuery, (err, insertResults) => {
                         if (err) {
                             //console.error('회원가입 쿼리 실행 중 에러', err);
-                            res.status(500).json({ error: 'An error occurred while registering user.' });
+                            res
+                                .status(500)
+                                .json({ error: 'An error occurred while registering user.' });
                         }
                         else {
                             //console.log('회원가입 성공', insertResults);
@@ -140,7 +170,7 @@ app.post('/api/register', (req, res) => __awaiter(void 0, void 0, void 0, functi
         }
     });
 }));
-app.get('/main', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/api/main', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = 'SELECT * FROM tb_posts ORDER BY date DESC';
     connection.query(query, (err, results) => {
         if (err) {
@@ -178,13 +208,15 @@ app.delete('/delete/:num', (req, res) => {
                 res.status(204).send(); // 삭제 성공 시 204 No Content 응답 반환
             }
             else {
-                res.status(404).json({ error: '해당 넘버를 가진 리소스를 찾을 수 없습니다.' });
+                res
+                    .status(404)
+                    .json({ error: '해당 넘버를 가진 리소스를 찾을 수 없습니다.' });
             }
         }
     });
 });
 app.post('/write', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { nickName, title, content, gameName, genre, detailGenre, url, personnel, deadLine } = req.body;
+    const { nickName, title, content, gameName, genre, detailGenre, url, personnel, deadLine, } = req.body;
     const insertQuery = `INSERT INTO tb_posts (writer, title, content, gameName, genre, detailGenre, url, personnel, deadLine) VALUES ('${nickName}', '${title}', '${content}', '${gameName}', '${genre}', '${detailGenre}', '${url}', '${personnel}', '${deadLine}')`;
     connection.query(insertQuery, (err, insertResult) => {
         if (err) {
@@ -197,13 +229,24 @@ app.post('/write', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 app.put('/modify/:num', (req, res) => {
     const num = req.params.num;
-    const { title, content, gameName, genre, detailGenre, url, personnel, deadLine } = req.body;
+    const { title, content, gameName, genre, detailGenre, url, personnel, deadLine, status, } = req.body;
     const updateQuerry = `
   UPDATE tb_posts
-    SET title = ?, content = ?, gameName = ?, genre = ?, detailGenre = ?, url = ?,personnel = ?, deadLine = ?
+    SET title = ?, content = ?, gameName = ?, genre = ?, detailGenre = ?, url = ?,personnel = ?, deadLine = ?, status = ?
   WHERE 
   num = ?`;
-    connection.query(updateQuerry, [title, content, gameName, genre, detailGenre, url, personnel, deadLine, num], (error, result) => {
+    connection.query(updateQuerry, [
+        title,
+        content,
+        gameName,
+        genre,
+        detailGenre,
+        url,
+        personnel,
+        deadLine,
+        status,
+        num,
+    ], (error, result) => {
         if (error) {
             res.status(500).json({ message: '데이터베이스 업데이트 오류' });
         }
@@ -211,6 +254,12 @@ app.put('/modify/:num', (req, res) => {
             res.status(200).json({ message: '데이터 업데이트 완료' });
         }
     });
+});
+// 클라이언트 빌드 폴더 서빙
+app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/build')));
+// 모든 경로를 React의 `index.html`로 라우팅 (SPA 지원)
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../client/build', 'index.html'));
 });
 // 서버 시작
 app.listen(port, () => {
